@@ -26,3 +26,21 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+// マルチ認証
+// ログイン
+Route::get('multi_login', [\App\Http\Controllers\MultiAuthController::class, 'showLoginForm']);
+Route::post('multi_login', [\App\Http\Controllers\MultiAuthController::class, 'login']);
+
+// ログアウト
+Route::get('multi_login/logout', [\App\Http\Controllers\MultiAuthController::class, 'logout']);
+
+// 管理者用DashBoard
+Route::prefix('administrators')->middleware('auth:administrators')->group(function(){
+    Route::get('dashboard', function(){ return '管理者権限でログイン完了'; });
+});
+
+// 講師用DashBoard
+Route::prefix('teachers')->middleware('auth:teachers')->group(function(){
+    Route::get('dashboard', function(){ return '講師でログイン完了'; });
+});
