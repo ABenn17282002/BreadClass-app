@@ -3,6 +3,8 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+// Stringメソッドの使用（指定文字列を使用するため）
+use Illuminate\Support\Str;
 
 class Authenticate extends Middleware
 {
@@ -15,6 +17,14 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if (! $request->expectsJson()) {
+
+            $uri = $request->path();
+
+            // URIが以下2つから始まる場合,mutli_loginページ返す
+            if(Str::startsWith($uri, ['administrators/', 'teachers/'])) {
+                return 'multi_login';
+            }
+
             return route('login');
         }
     }
