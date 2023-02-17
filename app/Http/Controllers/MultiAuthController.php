@@ -28,4 +28,9 @@ class MultiAuthController extends Controller
             'auth' => ['認証に失敗しました']
         ]);
     }
+
+    // LogOut
+    public function logout() {
+        return redirect('/multi_login');
+    }
 }

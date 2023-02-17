@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\MultiAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,10 +40,14 @@ Route::get('multi_login/logout', [\App\Http\Controllers\MultiAuthController::cla
 
 // 管理者用DashBoard
 Route::prefix('administrators')->middleware('auth:administrators')->group(function(){
-    Route::get('dashboard', function(){ return '管理者権限でログイン完了'; });
+    Route::middleware('auth:administrators')->group(function () {
+        Route::get('dashboard', [AdminController::class, 'index']);
+    });
 });
 
 // 講師用DashBoard
 Route::prefix('teachers')->middleware('auth:teachers')->group(function(){
-    Route::get('dashboard', function(){ return '講師でログイン完了'; });
+    Route::middleware('auth:teachers')->group(function () {
+        Route::get('dashboard', [TeacherController::class, 'index'])->name('teachers.dashboard');
+    });
 });
