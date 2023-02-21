@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-teacher-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             講師用ダッシュボード
@@ -12,4 +12,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</x-teacher-layout>

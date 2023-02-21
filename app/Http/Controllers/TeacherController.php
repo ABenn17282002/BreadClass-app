@@ -9,10 +9,16 @@ class TeacherController extends Controller
     // 講師用Dashboadの表示
     public function index()
     {
-        return view('teacher.dashboard')
-        // ブラウザバッグ防止機能
-        ->withHeaders([
-            'Cache-Control' => 'no-store',
+        return view('teacher.dashboard');
+    }
+
+    public function show(Request $request)
+    {
+
+        // dd($request);
+        return view('teacher.profile.show', [
+            'request' => $request,
+            'teacher' => $request->user(),
         ]);
     }
 }

@@ -36,18 +36,20 @@ Route::get('multi_login', [\App\Http\Controllers\MultiAuthController::class, 'sh
 Route::post('multi_login', [\App\Http\Controllers\MultiAuthController::class, 'login']);
 
 // ログアウト
-Route::get('multi_login/logout', [\App\Http\Controllers\MultiAuthController::class, 'logout']);
+Route::get('multi_login/logout', [\App\Http\Controllers\MultiAuthController::class, 'logout'])->name('multi_login.logout');
 
 // 管理者用DashBoard
 Route::prefix('administrators')->middleware('auth:administrators')->group(function(){
     Route::middleware('auth:administrators')->group(function () {
-        Route::get('dashboard', [AdminController::class, 'index']);
+        Route::get('dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     });
 });
 
 // 講師用DashBoard
 Route::prefix('teachers')->middleware('auth:teachers')->group(function(){
     Route::middleware('auth:teachers')->group(function () {
-        Route::get('dashboard', [TeacherController::class, 'index'])->name('teachers.dashboard');
+        Route::get('dashboard', [TeacherController::class, 'index'])->name('teacher.dashboard');
+
+        Route::get('profile',[TeacherController::class,'show'])->name('teacher.profile.show');
     });
 });
