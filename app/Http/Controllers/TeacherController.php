@@ -15,13 +15,12 @@ class TeacherController extends Controller
         return view('teacher.dashboard');
     }
 
-
-    public function show(Request $request): Teacher
+    // 講師一覧表示
+    public function show()
     {
-        dd($request);
-        // return view('teacher.profile.show', [
-        //     'request' => $request,
-        //     'teacher' => $request->user(),
-        // ]);
+        // teachers_tableの名前,email,作成日を取得
+        $teachers = Teacher::select('name','email','created_at')->get();
+
+        dd($teachers);
     }
 }

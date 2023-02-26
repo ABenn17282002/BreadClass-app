@@ -16,8 +16,8 @@
                         :active="request()->routeIs('teacher.dashboard')">
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="">
-                        講師一覧の表示
+                    <x-jet-nav-link href="{{ route('teacher.show') }}" :active="request()->routeIs('teacher.show')">
+                        講師一覧
                     </x-jet-nav-link>
                 </div>
             </div>
