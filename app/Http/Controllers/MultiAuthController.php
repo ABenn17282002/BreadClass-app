@@ -31,6 +31,10 @@ class MultiAuthController extends Controller
 
     // LogOut
     public function logout() {
-        return redirect('/multi_login');
+        /* ブラウザバッグによる再ログイン禁止
+        Auth:logout→セッション破棄→ブラウザに残っているキャッシュの全クリア*/
+        \Auth::logout();
+        \Session::flush();
+        return redirect('/multi_login')->withHeaders(['Cache-Control' => 'no-store']);
     }
 }
