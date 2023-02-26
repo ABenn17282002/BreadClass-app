@@ -50,6 +50,6 @@ Route::prefix('teachers')->middleware('auth:teachers')->group(function(){
     Route::middleware('auth:teachers')->group(function () {
         Route::get('dashboard', [TeacherController::class, 'index'])->name('teacher.dashboard');
 
-        Route::get('profile',[TeacherController::class,'show'])->name('teacher.profile.show');
+        Route::get('show', [TeacherController::class, 'show'])->name('teacher.show');
     });
 });
