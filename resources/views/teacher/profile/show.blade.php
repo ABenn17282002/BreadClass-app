@@ -23,14 +23,14 @@
 
             @if (Laravel\Fortify\Features::canManageTwoFactorAuthentication())
             <div class="mt-10 sm:mt-0">
-                @livewire('teachers.profile.two-factor-authentication-form')
+                @livewire('teacher.profile.two-factor-authentication-form')
             </div>
 
             <x-jet-section-border />
             @endif
 
             <div class="mt-10 sm:mt-0">
-                @livewire('teachers.profile.logout-other-browser-sessions-form')
+                @livewire('teacher.profile.logout-other-browser-sessions-form')
             </div>
 
             @if (Laravel\Jetstream\Jetstream::hasAccountDeletionFeatures())
