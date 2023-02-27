@@ -21,6 +21,7 @@ class TeacherController extends Controller
         // teachers_tableの名前,email,作成日を取得
         $teachers = Teacher::select('name','email','created_at')->get();
 
-        dd($teachers);
+        // teacher/show/index.blade.phpに$teachers変数を渡す。
+        return \view('teacher.show.index',compact('teachers'));
     }
 }
