@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-// User・Hashモデルの使用
+// Teacher・Hashモデルの使用
 use App\Models\Teacher;
 use Illuminate\Support\Facades\Hash;
 

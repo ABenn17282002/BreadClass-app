@@ -16,7 +16,7 @@
                         :active="request()->routeIs('admin.dashboard')">
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="">
+                    <x-jet-nav-link href="{{ route('admin.show') }}" :active="request()->routeIs('admin.show')">
                         管理者一覧
                     </x-jet-nav-link>
                     <x-jet-nav-link href="">
