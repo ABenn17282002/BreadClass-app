@@ -1,7 +1,7 @@
 <x-teacher-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            講師情報一覧
+            講師一覧
         </h2>
     </x-slot>
 
@@ -39,7 +39,6 @@
                                             <td class="px-4 py-3">{{ $teacher -> name }}</td>
                                             <td class="px-4 py-3">{{ $teacher -> email }}</td>
                                             <td class="px-4 py-3">{{ $teacher->created_at->diffForHumans() }}</td>
-                                            <td class="px-4 py-3">{{ $teacher->updated_at}}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>

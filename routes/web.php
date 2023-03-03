@@ -42,6 +42,8 @@ Route::get('multi_login/logout', [\App\Http\Controllers\MultiAuthController::cla
 Route::prefix('administrators')->middleware('auth:administrators')->group(function(){
     Route::middleware('auth:administrators')->group(function () {
         Route::get('dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+
+        Route::get('show', [AdminController::class, 'AdminShow'])->name('admin.show');
     });
 });
 
