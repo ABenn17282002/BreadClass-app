@@ -19,7 +19,7 @@
                     <x-jet-nav-link href="{{ route('admin.show') }}" :active="request()->routeIs('admin.show')">
                         管理者一覧
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="">
+                    <x-jet-nav-link href="{{ route('admin.teacher') }}" :active="request()->routeIs('admin.teacher')">
                         講師一覧
                     </x-jet-nav-link>
                 </div>
