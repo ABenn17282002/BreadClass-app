@@ -43,7 +43,11 @@ Route::prefix('administrators')->middleware('auth:administrators')->group(functi
     Route::middleware('auth:administrators')->group(function () {
         Route::get('dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 
+        // 管理者一覧の表示
         Route::get('show', [AdminController::class, 'AdminShow'])->name('admin.show');
+
+        // 講師一覧の表示
+        Route::get('teacher', [AdminController::class, 'TeacherShow'])->name('admin.teacher');
     });
 });
 
@@ -52,6 +56,7 @@ Route::prefix('teachers')->middleware('auth:teachers')->group(function(){
     Route::middleware('auth:teachers')->group(function () {
         Route::get('dashboard', [TeacherController::class, 'index'])->name('teacher.dashboard');
 
+        // 講師一覧
         Route::get('show', [TeacherController::class, 'show'])->name('teacher.show');
     });
 });

@@ -25,4 +25,15 @@ class AdminController extends Controller
         // admin/show/index.blade.phpに$administrators変数を渡す。
         return \view('admin.show.index',compact('administrators'));
     }
+
+
+    // 講師一覧ページの表示
+    public function TeacherShow()
+    {
+        // teachers_tableの名前,email,作成日を取得
+        $teachers = Teacher::select('name','email','created_at')->get();
+
+        // teacher/show/index.blade.phpに$teachers変数を渡す。
+        return \view('admin.teacher.index',compact('teachers'));
+    }
 }
