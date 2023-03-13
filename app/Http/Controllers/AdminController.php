@@ -26,6 +26,11 @@ class AdminController extends Controller
         return \view('admin.show.index',compact('administrators'));
     }
 
+    // 管理者新規作成画面の表示
+    public function AdminCreate()
+    {
+        return view('admin.show.create');
+    }
 
     // 講師一覧ページの表示
     public function TeacherShow()

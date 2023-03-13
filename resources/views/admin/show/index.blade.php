@@ -13,7 +13,7 @@
                         <div class="container md:px-5 mx-auto">
                             {{-- 新規作成ボタン --}}
                             <div class="flex justify-end mb-4">
-                                <button onclick=""
+                                <button onclick="location.href='{{ route('admin.show.create')}}'"
                                     class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">新規登録する</button>
                             </div>
                             <div class="lg:w-2/3 w-full mx-auto overflow-auto">
