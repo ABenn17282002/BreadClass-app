@@ -46,6 +46,9 @@ Route::prefix('administrators')->middleware('auth:administrators')->group(functi
         // 管理者一覧の表示
         Route::get('show', [AdminController::class, 'AdminShow'])->name('admin.show');
 
+        // 管理者:新規作成画面
+        Route::get('create', [AdminController::class, 'AdminCreate'])->name('admin.show.create');
+
         // 講師一覧の表示
         Route::get('teacher', [AdminController::class, 'TeacherShow'])->name('admin.teacher');
     });
