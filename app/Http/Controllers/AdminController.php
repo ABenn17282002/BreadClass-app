@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-// Administrator, Teacher・Hashモデルの使用
+
+// Administrator, Teacherモデルの使用
 use app\Models\Administrator;
 use App\Models\Teacher;
+// 暗号化、バリデーションの使用
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+
 
 class AdminController extends Controller
 {
@@ -31,6 +35,20 @@ class AdminController extends Controller
     {
         return view('admin.show.create');
     }
+
+    // 管理者情報登録
+    public function AdminStore(Request $request)
+    {
+        Administrator::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+            'role'=> 5,
+        ]);
+
+        return to_route('admin.show');
+    }
+
 
     // 講師一覧ページの表示
     public function TeacherShow()
