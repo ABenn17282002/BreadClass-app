@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+// 管理者・講師用コントローラーの使用
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\MultiAuthController;
@@ -48,6 +49,9 @@ Route::prefix('administrators')->middleware('auth:administrators')->group(functi
 
         // 管理者:新規作成画面
         Route::get('create', [AdminController::class, 'AdminCreate'])->name('admin.show.create');
+
+        // 管理者:新規追加
+        Route::post('store', [AdminController::class, 'AdminStore'])->name('admin.show.store');
 
         // 講師一覧の表示
         Route::get('teacher', [AdminController::class, 'TeacherShow'])->name('admin.teacher');
