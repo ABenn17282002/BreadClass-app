@@ -116,7 +116,14 @@ return [
     'uploaded'    => ':attributeのアップロードに失敗しました。',
     'url'         => ':attributeは、有効なURL形式で指定してください。',
     'uuid'        => ':attributeは、有効なUUIDでなければなりません。',
-
+    // PasswordValidationの日本語化
+    'password' => [
+        'letters' => ':attributeは、少なくとも1つの文字が含まれていなければなりません。',
+        'mixed' => ':attributeは、少なくとも大文字と小文字を1つずつ含める必要があります。',
+        'numbers' => ':attributeは、少なくとも1つの数字が含まれていなければなりません。',
+        'symbols' => ':attributeは、少なくとも1つの記号が含まれていなければなりません。',
+        'uncompromised' => 'この:attributeは過去に漏洩したことのある脆弱な:attributeです。別の:attributeを入力してください。',
+    ],
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
@@ -145,5 +152,9 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'name' => '名前',
+        'email' => 'メールアドレス',
+        'password' => 'パスワード',
+    ],
 ];
