@@ -39,18 +39,20 @@ Route::post('multi_login', [\App\Http\Controllers\MultiAuthController::class, 'l
 // ログアウト
 Route::get('multi_login/logout', [\App\Http\Controllers\MultiAuthController::class, 'logout'])->name('multi_login.logout');
 
-// 管理者用DashBoard
+// 管理者用ルート
 Route::prefix('administrators')->middleware('auth:administrators')->group(function(){
     Route::middleware('auth:administrators')->group(function () {
+        // 管理者用ダッシュボード
         Route::get('dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 
         // 管理者一覧の表示
         Route::get('show', [AdminController::class, 'AdminShow'])->name('admin.show');
-
-        // 管理者:新規作成画面
-        Route::get('create', [AdminController::class, 'AdminCreate'])->name('admin.show.create');
-
-        // 管理者:新規追加
+        // 管理者作成画面
+        Route::get('create', [AdminController::class, 'AdminCreateForm'])->name('admin.show.create');
+        // 新規作成確認画面
+        Route::post('confirm',  [AdminController::class, 'AdminPost'])->name('admin.show.post');
+        Route::get('confirm',  [AdminController::class, 'AdminConfirm'])->name('admin.show.confirm');
+        // 管理者新規登録
         Route::post('store', [AdminController::class, 'AdminStore'])->name('admin.show.store');
 
         // 講師一覧の表示
