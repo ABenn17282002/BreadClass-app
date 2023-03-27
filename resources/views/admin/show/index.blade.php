@@ -11,6 +11,8 @@
                 <div class="md:p-6 bg-white border-b border-gray-200">
                     <section class="text-gray-600 body-font">
                         <div class="container md:px-5 mx-auto">
+                            {{-- flassmessageの表示 --}}
+                            <x-flash-message />
                             {{-- 新規作成ボタン --}}
                             <div class="flex justify-end mb-4">
                                 <button onclick="location.href='{{ route('admin.show.create')}}'"

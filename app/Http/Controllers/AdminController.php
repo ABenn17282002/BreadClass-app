@@ -103,6 +103,7 @@ class AdminController extends Controller
             return redirect()->action($this->form_show);
         }
 
+        // DB登録処理
         $administrators =  Administrator::create([
             'name' => $input['name'],
             'email' => $input['email'],
@@ -110,9 +111,12 @@ class AdminController extends Controller
             'role'=> 5,
         ]);
 
+		// 一覧画面へリダイレクト,FlassMessage
+        return \to_route('admin.show')
+        ->with('status','管理者登録が完了しました。');
+
+        // フォームのセッション値は全て削除する
         $request->session()->forget("form_input");
-		// 一覧画面へリダイレクト
-        return \to_route('admin.show');
     }
 
     // 講師一覧ページの表示
