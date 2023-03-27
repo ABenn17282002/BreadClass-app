@@ -40,7 +40,7 @@ class AdminController extends Controller
     public function AdminShow()
     {
         // administrators_tableの名前,email,作成日を取得
-        $administrators = Administrator::select('name','email','created_at')->get();
+        $administrators = Administrator::select('id','name','email','created_at')->get();
         // admin/show/index.blade.phpに$administrators変数を渡す。
         return \view('admin.show.index',compact('administrators'));
     }
@@ -60,8 +60,8 @@ class AdminController extends Controller
 
 		// フォームから値を取得する
         $input =["name" => $request['name'],
-                 "email"=> $request['email'],
-                 "password"=>Hash::make($request['password']),
+                "email"=> $request['email'],
+                "password"=>Hash::make($request['password']),
                 ];
 
         //セッションに書き込む
@@ -71,9 +71,9 @@ class AdminController extends Controller
         return redirect()->action($this->form_confirm);
     }
 
-	 /*
-     * 確認画面出力
-     */
+	/*
+    * 確認画面出力
+    */
     public function AdminConfirm(Request $request)
     {
         //セッションから値を取り出す
@@ -118,6 +118,21 @@ class AdminController extends Controller
         // フォームのセッション値は全て削除する
         $request->session()->forget("form_input");
     }
+
+	/*
+    * 編集用画面の出力
+    */
+    public function AdminEdit($id)
+    {
+        // idがなければ404画面
+        $administrators = Administrator::findOrFail($id);
+        dd($administrators);
+
+        // admin/owners/edit.blade.phpにowner変数(administrators_id)を渡す。
+        // return \view('admin.show.edit',\compact('administrators'));
+    }
+
+
 
     // 講師一覧ページの表示
     public function TeacherShow()
