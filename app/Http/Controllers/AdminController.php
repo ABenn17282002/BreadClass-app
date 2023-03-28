@@ -39,7 +39,7 @@ class AdminController extends Controller
     // 管理者一覧ページの表示
     public function AdminShow()
     {
-        // administrators_tableの名前,email,作成日を取得
+        // administrators_tableのid,名前,email,作成日を取得
         $administrators = Administrator::select('id','name','email','created_at')->get();
         // admin/show/index.blade.phpに$administrators変数を渡す。
         return \view('admin.show.index',compact('administrators'));
@@ -126,10 +126,10 @@ class AdminController extends Controller
     {
         // idがなければ404画面
         $administrators = Administrator::findOrFail($id);
-        dd($administrators);
+        // dd($administrators);
 
         // admin/owners/edit.blade.phpにowner変数(administrators_id)を渡す。
-        // return \view('admin.show.edit',\compact('administrators'));
+        return \view('admin.show.edit',\compact('administrators'));
     }
 
 
