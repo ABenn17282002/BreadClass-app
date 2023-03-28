@@ -11,6 +11,8 @@
                 <div class="md:p-6 bg-white border-b border-gray-200">
                     <section class="text-gray-600 body-font">
                         <div class="container md:px-5 mx-auto">
+                            {{-- flassmessageの表示 --}}
+                            <x-flash-message />
                             {{-- 新規作成ボタン --}}
                             <div class="flex justify-end mb-4">
                                 <button onclick="location.href='{{ route('admin.show.create')}}'"
@@ -48,7 +50,8 @@
                                             </td>
                                             {{-- 編集ボタン作成 --}}
                                             <td class="md:px-4 py-3">
-                                                <button onclick=""
+                                                <button
+                                                    onclick="location.href='{{ route('admin.show.edit', ['admin' => $administrator->id ])}}'"
                                                     class="text-white bg-indigo-400 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-500 rounded ">編集</button>
                                             </td>
                                             {{-- 削除用ボタン --}}
