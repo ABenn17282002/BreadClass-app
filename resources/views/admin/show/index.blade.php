@@ -54,11 +54,10 @@
                                                     onclick="location.href='{{ route('admin.show.edit', ['admin' => $administrator->id ])}}'"
                                                     class="text-white bg-indigo-400 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-500 rounded ">編集</button>
                                             </td>
-                                            {{-- 削除用ボタン --}}
+                                            {{-- ゴミ箱用ボタン(softdeleted) --}}
                                             <form id="" method="post" action="">
                                                 <td class="md:px-4 py-3">
-                                                    <a href="#"
-                                                        class="text-white bg-red-400 border-0 py-2 px-4 focus:outline-none hover:bg-red-500 rounded ">削除</a>
+                                                    <a href="#"><img class="w-8 h-8" src="{{ asset("images/trash.png") }}"></a>
                                                 </td>
                                             </form>
                                         </tr>
