@@ -30,13 +30,17 @@ class AdminController extends Controller
         ]);
 	}
 
-    // 管理者Dashboadの表示
+    /*
+    * 管理者DashBoadの表示
+    */
     public function index()
     {
         return view('admin.dashboard');
     }
 
-    // 管理者一覧ページの表示
+    /*
+    * 管理者一覧の表示
+    */
     public function AdminShow()
     {
         // administrators_tableのid,名前,email,作成日を取得
@@ -45,15 +49,20 @@ class AdminController extends Controller
         return \view('admin.show.index',compact('administrators'));
     }
 
-    // 管理者新規作成画面の表示
+    /*
+    * 管理者新規作成画面の表示
+    */
     public function AdminCreateForm()
     {
         return view('admin.show.create');
     }
 
-     /*
-     * 入力から確認画面へ遷移する際の処理
-     */
+	/**
+    * 管理者新規作成→確認画面への受け渡し処理
+    *
+    * @param \Illuminate\Http\Request $request
+    * @return \Illuminate\Http\Response
+    */
     function AdminPost(Request $request)
     {
         $this->validator($request->all())->validate();
@@ -71,8 +80,11 @@ class AdminController extends Controller
         return redirect()->action($this->form_confirm);
     }
 
-	/*
-    * 確認画面出力
+	/**
+    * 管理者確認画面出力
+    *
+    * @param \Illuminate\Http\Request $request
+    * @return \Illuminate\Http\Response
     */
     public function AdminConfirm(Request $request)
     {
@@ -88,11 +100,11 @@ class AdminController extends Controller
     }
 
     /**
-     * 登録処理
+     * 管理者新規登録処理
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
-     */
+    */
     public function AdminStore(Request $request)
     {
         //セッションから値を取り出す
@@ -119,19 +131,49 @@ class AdminController extends Controller
         $request->session()->forget("form_input");
     }
 
-	/*
-    * 編集用画面の出力
+    /**
+     * 管理者編集画面
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
     */
     public function AdminEdit($id)
     {
         // idがなければ404画面
         $administrators = Administrator::findOrFail($id);
-        // dd($administrators);
 
-        // admin/owners/edit.blade.phpにowner変数(administrators_id)を渡す。
+        // admin/show/edit.blade.phpにadministrators変数(administrators_id)を渡す。
         return \view('admin.show.edit',\compact('administrators'));
     }
 
+    /**
+    * 管理者情報更新処理
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
+    public function AdminUpdate(Request $request, $id)
+    {
+
+        // idがなければ404画面
+        $administrators = Administrator::findOrFail($id);
+        // フォームから取得した値を代入
+        $administrators -> name = $request->name;
+        $administrators -> email = $request->email;
+        // passwordは暗号化
+        $administrators -> password = Hash::make($request->password);
+        // 情報を保存
+        $administrators ->save();
+
+        // dd($administrators);
+
+        // 一覧ページにredirectして更新
+        return \redirect()
+        ->route('admin.show')
+        ->with('status','管理者情報を更新しました');
+
+    }
 
 
     // 講師一覧ページの表示
