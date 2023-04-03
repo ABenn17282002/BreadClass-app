@@ -54,8 +54,10 @@ Route::prefix('administrators')->middleware('auth:administrators')->group(functi
         Route::get('confirm',  [AdminController::class, 'AdminConfirm'])->name('admin.show.confirm');
         // 管理者新規登録
         Route::post('store', [AdminController::class, 'AdminStore'])->name('admin.show.store');
-        // 管理者新規登録
+        // 管理者情報編集
         Route::get('edit/{admin}', [AdminController::class, 'AdminEdit'])->name('admin.show.edit');
+        // 管理者情報更新
+        Route::put('update/{admin}',[AdminController::class, 'AdminUpdate'])->name('admin.show.update');
 
         // 講師一覧の表示
         Route::get('teacher', [AdminController::class, 'TeacherShow'])->name('admin.teacher');
