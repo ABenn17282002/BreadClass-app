@@ -155,6 +155,8 @@ class AdminController extends Controller
     */
     public function AdminUpdate(Request $request, $id)
     {
+        // UpdateValidation
+        $this->validator($request->all())->validate();
 
         // idがなければ404画面
         $administrators = Administrator::findOrFail($id);
@@ -166,8 +168,6 @@ class AdminController extends Controller
         // 情報を保存
         $administrators ->save();
 
-        // dd($administrators);
-
         // 一覧ページにredirectして更新
         return \redirect()
         ->route('admin.show')
@@ -175,6 +175,32 @@ class AdminController extends Controller
 
     }
 
+    /**
+     * 管理者情報の論理削除
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+    */
+    public function AdminDeleted($id)
+    {
+        //ソフトデリート
+        Administrator::findOrFail($id)->delete();
+
+		// 管理者一覧へ戻る
+        return \redirect()->route('admin.show')
+        ->with('trash','管理者情報をゴミ箱へ移しました');;
+    }
+
+    /*
+    * 管理者ゴミ箱一覧の表示
+    */
+    public function expiredAdminIndex()
+    {
+        // softDeleteのみを取得
+        $expiredAdmins = Administrator::onlyTrashed()->get();
+
+        return view('admin.expired-admins',\compact('expiredAdmins'));
+    }
 
     // 講師一覧ページの表示
     public function TeacherShow()

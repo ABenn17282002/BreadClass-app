@@ -18,6 +18,14 @@
             "positionClass": "toast-top-right",
         }
         toastr.success("{{ Session::get('status') }}");
+    // 論理削除用message
+     @elseif (Session::has('trash'))
+       toastr.options =
+       {
+            "closeButton" : true,
+            "positionClass": "toast-top-right",
+       }
+       toastr.warning("{{ Session::get('trash') }}");
     @endif
 });
 </script>

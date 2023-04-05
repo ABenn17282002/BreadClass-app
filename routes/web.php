@@ -42,27 +42,35 @@ Route::get('multi_login/logout', [\App\Http\Controllers\MultiAuthController::cla
 // 管理者用ルート
 Route::prefix('administrators')->middleware('auth:administrators')->group(function(){
     Route::middleware('auth:administrators')->group(function () {
-        // 管理者用ダッシュボード
+        // ダッシュボード
         Route::get('dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-
-        // 管理者一覧の表示
+        // 一覧の表示
         Route::get('show', [AdminController::class, 'AdminShow'])->name('admin.show');
-        // 管理者作成画面
+        // 新規作成画面
         Route::get('create', [AdminController::class, 'AdminCreateForm'])->name('admin.show.create');
         // 新規作成確認画面
         Route::post('confirm',  [AdminController::class, 'AdminPost'])->name('admin.show.post');
         Route::get('confirm',  [AdminController::class, 'AdminConfirm'])->name('admin.show.confirm');
-        // 管理者新規登録
+        // 新規登録
         Route::post('store', [AdminController::class, 'AdminStore'])->name('admin.show.store');
-        // 管理者情報編集
+        // 情報の編集
         Route::get('edit/{admin}', [AdminController::class, 'AdminEdit'])->name('admin.show.edit');
-        // 管理者情報更新
+        // 情報の更新
         Route::put('update/{admin}',[AdminController::class, 'AdminUpdate'])->name('admin.show.update');
+        // 情報の削除(論理削除)
+        Route::delete('delelte/{admin}', [AdminController::class, 'AdminDeleted'])->name('admins.expired');
 
         // 講師一覧の表示
         Route::get('teacher', [AdminController::class, 'TeacherShow'])->name('admin.teacher');
     });
 });
+
+// 管理者情報(ゴミ箱一覧表示)
+Route::prefix('expired-owners')->
+    middleware('auth:administrators')->group(function(){
+        Route::get('index', [AdminController::class, 'expiredAdminIndex'])->name('expired-admins.index');
+});
+
 
 // 講師用DashBoard
 Route::prefix('teachers')->middleware('auth:teachers')->group(function(){

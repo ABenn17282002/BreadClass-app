@@ -16,7 +16,8 @@
                             {{-- 新規作成ボタン --}}
                             <div class="flex justify-end mb-4">
                                 <button onclick="location.href='{{ route('admin.show.create')}}'"
-                                    class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">新規登録する</button>
+                                    class="text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg">新規登録する</button>
+                                    <a href="{{ route('expired-admins.index')}}"><img class="w-10 h-10 ml-5" src="{{ asset("images/trash.png") }}"></a>
                             </div>
                             <div class="lg:w-2/3 w-full mx-auto overflow-auto">
                                 <table class="table-auto w-full text-left whitespace-no-wrap">
@@ -46,18 +47,19 @@
                                         <tr>
                                             <td class="md:px-4 py-3">{{ $administrator -> name }}</td>
                                             <td class="md:px-4 py-3">{{ $administrator-> email }}</td>
-                                            <td class="md:px-4 py-3">{{ $administrator->created_at->diffForHumans() }}
+                                            <td class="md:px-4 py-3">{{ $administrator-> created_at->diffForHumans() }}
                                             </td>
                                             {{-- 編集ボタン作成 --}}
                                             <td class="md:px-4 py-3">
-                                                <button
-                                                    onclick="location.href='{{ route('admin.show.edit', ['admin' => $administrator->id ])}}'"
-                                                    class="text-white bg-indigo-400 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-500 rounded ">編集</button>
+                                                <button onclick="location.href='{{ route('admin.show.edit', ['admin' => $administrator->id ])}}'" class="text-white bg-indigo-400 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-500 rounded ">編集</button>
                                             </td>
                                             {{-- ゴミ箱用ボタン(softdeleted) --}}
-                                            <form id="" method="post" action="">
+                                            <form id="delete_{{ $administrator->id }}" method="post" action="{{ route('admins.expired', ['admin' => $administrator->id ]) }}">
+                                                @csrf
+                                                {{-- 削除メソッド --}}
+                                                @method('delete')
                                                 <td class="md:px-4 py-3">
-                                                    <a href="#"><img class="w-8 h-8" src="{{ asset("images/trash.png") }}"></a>
+                                                    <a href="#" data-id="{{ $administrator->id }}" onclick="deletePost(this)"><img class="w-8 h-8" src="{{ asset("images/trash.png") }}"></a>
                                                 </td>
                                             </form>
                                         </tr>
@@ -71,4 +73,13 @@
             </div>
         </div>
     </div>
+    {{-- 削除確認用アラート --}}
+    <script>
+        function deletePost(e) {
+            'use strict';
+            if (confirm('この情報をゴミ箱へ移します。宜しいですか？')) {
+                document.getElementById('delete_' + e.dataset.id).submit();
+            }
+        }
+    </script>
 </x-admin-layout>
