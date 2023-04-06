@@ -65,10 +65,13 @@ Route::prefix('administrators')->middleware('auth:administrators')->group(functi
     });
 });
 
-// 管理者情報(ゴミ箱一覧表示)
-Route::prefix('expired-owners')->
+// 管理者情報(ゴミ箱)
+Route::prefix('expired-admins')->
     middleware('auth:administrators')->group(function(){
+        // ゴミ箱一覧の表示
         Route::get('index', [AdminController::class, 'expiredAdminIndex'])->name('expired-admins.index');
+        // 情報の復元
+        Route::patch('index/restore/{admin}', [AdminController::class, 'AdminRestore'])->name('admins.restore');
 });
 
 
