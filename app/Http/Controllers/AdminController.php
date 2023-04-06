@@ -188,7 +188,7 @@ class AdminController extends Controller
 
 		// 管理者一覧へ戻る
         return \redirect()->route('admin.show')
-        ->with('trash','管理者情報をゴミ箱へ移しました');;
+        ->with('trash','管理者情報をゴミ箱へ移しました');
     }
 
     /*
@@ -201,6 +201,22 @@ class AdminController extends Controller
 
         return view('admin.expired-admins',\compact('expiredAdmins'));
     }
+
+    /**
+     * 管理者情報の復元
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function AdminRestore($id)
+    {
+    	// 管理者ユーザのゴミ箱IDを取得し、リストア
+        Administrator::onlyTrashed()->findOrFail($id)->restore();
+
+        return redirect()->route('admin.show')
+        ->with('success','管理者情報を復元しました。');
+    }
+
 
     // 講師一覧ページの表示
     public function TeacherShow()

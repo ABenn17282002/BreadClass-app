@@ -46,9 +46,15 @@
                                             <td class="px-4 py-3">{{ $admin->email }}</td>
                                             {{-- 削除済みの日に変更 --}}
                                             <td class="px-4 py-3">{{ $admin->deleted_at->diffForHumans() }}</td>
+                                            <form  method="post" action="{{ route('admins.restore', ['admin' => $admin->id ]) }}">
+                                                @csrf
+                                                @method('patch')
+                                                <td class="px-4 py-3">
+                                                    <button type="submit" class="bg-green-500 hover:bg-green-400 text-white rounded py-2 px-4">復元</button>
+                                                </td>
+                                            </form>
                                             {{-- 削除用ボタン --}}
-                                            <form id="" method="post"
-                                                action="">
+                                            <form id="" method="post" action="">
                                                 @csrf
                                                 <td class="px-4 py-3">
                                                     {{-- data-id=>owner_id取得 ==>onclickで削除実行 --}}
