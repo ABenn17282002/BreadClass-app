@@ -18,14 +18,6 @@
             "positionClass": "toast-top-right",
         }
         toastr.success("{{ Session::get('status') }}");
-    // 論理削除用message
-    @elseif (Session::has('trash'))
-        toastr.options =
-        {
-            "closeButton" : true,
-            "positionClass": "toast-top-right",
-        }
-        toastr.warning("{{ Session::get('trash') }}");
     // 情報更新用message
     @elseif (Session::has('success'))
         toastr.options =
@@ -34,6 +26,22 @@
             "positionClass": "toast-top-right",
         }
         toastr.success("{{ Session::get('success') }}");
+    // 論理削除用message
+    @elseif (Session::has('trash'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "positionClass": "toast-top-right",
+        }
+        toastr.warning("{{ Session::get('trash') }}");
+    // 物理削除用message
+    @elseif (Session::has('delete'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "positionClass": "toast-top-right",
+        }
+        toastr.error("{{ Session::get('delete') }}");
     @endif
 });
 </script>

@@ -23,18 +23,17 @@
                                 <table class="table-auto w-full text-left whitespace-no-wrap">
                                     <thead>
                                         <tr>
-                                            <th
-                                                class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">
-                                                名前</th>
-                                            <th
-                                                class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                                メールアドレス</th>
-                                            <th
-                                                class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                                期限切れ日時</th>
+                                            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">
+                                                名前
+                                            </th>
+                                            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                                メールアドレス
+                                            </th>
+                                            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                                削除日
+                                            </th>
                                             {{-- buttonを同じ形に編集する --}}
-                                            <th
-                                                class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br">
+                                            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br">
                                             </th>
                                         </tr>
                                     </thead>
@@ -54,12 +53,11 @@
                                                 </td>
                                             </form>
                                             {{-- 削除用ボタン --}}
-                                            <form id="" method="post" action="">
+                                            <form id="delete_{{ $admin-> id }}" method="post" action="{{ route('admins.destroy', ['admin' => $admin->id])}}">
                                                 @csrf
                                                 <td class="px-4 py-3">
-                                                    {{-- data-id=>owner_id取得 ==>onclickで削除実行 --}}
-                                                    <a href="#" data-id="" onclick=""
-                                                        class="text-white bg-red-400 border-0 py-2 px-4 focus:outline-none hover:bg-red-500 rounded ">削除</a>
+                                                    {{-- data-id=>administrators_id取得 ==>onclickで削除実行 --}}
+                                                    <a href="#" data-id="{{ $admin-> id }}" onclick="deletePost(this)" class="text-white bg-red-400 border-0 py-2 px-4 focus:outline-none hover:bg-red-500 rounded ">削除</a>
                                                 </td>
                                             </form>
                                         </tr>
@@ -73,4 +71,13 @@
             </div>
         </div>
     </div>
+    {{-- 削除確認用アラート --}}
+    <script>
+        function deletePost(e) {
+        'use strict';
+        if (confirm('データを完全削除しますか?')) {
+        document.getElementById('delete_' + e.dataset.id).submit();
+        }
+        }
+    </script>
 </x-admin-layout>
