@@ -217,6 +217,19 @@ class AdminController extends Controller
         ->with('success','管理者情報を復元しました。');
     }
 
+    /**
+     * 管理者情報の完全削除
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+    */
+    public function expiredAdminDestroy($id)
+    {
+        // 論理削除したuserを物理削除する
+        Administrator::onlyTrashed()->findOrFail($id)->forceDelete();
+        return redirect()->route('expired-admins.index')
+        ->with('delete','管理者情報を完全に削除しました');;
+    }
 
     // 講師一覧ページの表示
     public function TeacherShow()

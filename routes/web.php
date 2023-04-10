@@ -71,7 +71,9 @@ Route::prefix('expired-admins')->
         // ゴミ箱一覧の表示
         Route::get('index', [AdminController::class, 'expiredAdminIndex'])->name('expired-admins.index');
         // 情報の復元
-        Route::patch('index/restore/{admin}', [AdminController::class, 'AdminRestore'])->name('admins.restore');
+        Route::patch('restore/{admin}', [AdminController::class, 'AdminRestore'])->name('admins.restore');
+		// 管理者情報物理削除
+        Route::post('destroy/{admin}', [AdminController::class, 'expiredAdminDestroy'])->name('admins.destroy');
 });
 
 
