@@ -46,11 +46,13 @@
                         </x-slot>
 
                         <x-slot name="content">
+                            <x-jet-dropdown-link href="{{ route('admin.profile')}}">
+                                {{ __('Profile') }}
+                            </x-jet-dropdown-link>
                             <div class="border-t border-gray-100"></div>
                             <!-- Authentication -->
                             <form method="GET" action="{{ route('multi_login.logout') }}" x-data>
                                 @csrf
-
                                 <x-jet-dropdown-link href="{{ route('multi_login.logout') }}"
                                     @click.prevent="$root.submit();">
                                     {{ __('Log Out') }}
@@ -96,10 +98,12 @@
             </div>
 
             <div class="mt-3 space-y-1">
+                <x-jet-responsive-nav-link href="{{ route('admin.profile')}}">
+                    {{ __('Profile') }}
+                </x-jet-responsive-nav-link>
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('multi_login.logout')  }}" x-data>
                     @csrf
-
                     <x-jet-responsive-nav-link href="{{ route('multi_login.logout')  }}"
                         @click.prevent="$root.submit();">
                         {{ __('Log Out') }}

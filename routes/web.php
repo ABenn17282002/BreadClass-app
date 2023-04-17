@@ -59,6 +59,9 @@ Route::prefix('administrators')->middleware('auth:administrators')->group(functi
         Route::put('update/{admin}',[AdminController::class, 'AdminUpdate'])->name('admin.show.update');
         // 情報の削除(論理削除)
         Route::delete('delelte/{admin}', [AdminController::class, 'AdminDeleted'])->name('admins.expired');
+        // プロフィール画面
+        Route::get('profile', [AdminController::class, 'AdminProfile'])->name('admin.profile');
+
 
         // 講師一覧の表示
         Route::get('teacher', [AdminController::class, 'TeacherShow'])->name('admin.teacher');

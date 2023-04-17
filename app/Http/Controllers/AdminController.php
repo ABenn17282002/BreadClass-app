@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Hash;
 // Validation,PasswordRule用モジュールの使用
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
+// 認証モデルの追加
+use Illuminate\Support\Facades\Auth;
+
 
 class AdminController extends Controller
 {
@@ -231,6 +234,24 @@ class AdminController extends Controller
         return redirect()->route('expired-admins.index')
         ->with('delete','管理者情報を完全に削除しました');
 
+    }
+
+    /**
+     * 管理者プロフィールの表示
+     *
+    */
+    public function AdminProfile()
+    {
+        // 認証されたユーザーのIDを取得する
+        $userId = Auth::id();
+
+        // 認証されたユーザーのみを取得する
+        $administrator = Administrator::where('id', $userId)->get();
+
+        // dd($administrator);
+
+        // admin/profile/index.blade.phpに認証されたIDを渡す。
+        return \view('admin.profile.index',\compact('administrator'));
     }
 
     // 講師一覧ページの表示
