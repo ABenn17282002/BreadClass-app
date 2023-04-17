@@ -43,8 +43,9 @@ class AdminController extends Controller
     */
     public function AdminShow()
     {
-        // administrators_tableのid,名前,email,作成日を取得
-        $administrators = Administrator::select('id','name','email','created_at')->get();
+         // administrators_tableのid,名前,email,role,作成日,更新日を取得
+        $administrators = Administrator::select('id','name','email','role','created_at','updated_at')->get();
+
         // admin/show/index.blade.phpに$administrators変数を渡す。
         return \view('admin.show.index',compact('administrators'));
     }
@@ -228,7 +229,8 @@ class AdminController extends Controller
         // 論理削除したuserを物理削除する
         Administrator::onlyTrashed()->findOrFail($id)->forceDelete();
         return redirect()->route('expired-admins.index')
-        ->with('delete','管理者情報を完全に削除しました');;
+        ->with('delete','管理者情報を完全に削除しました');
+
     }
 
     // 講師一覧ページの表示
