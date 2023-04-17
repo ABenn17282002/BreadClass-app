@@ -2,8 +2,14 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+// 認証モデルの使用
+use Illuminate\Support\Facades\Auth;
+// Gateモデルの使用
+use Illuminate\Support\Facades\Gate;
+// Administrator, Teacherモデルの使用
+use app\Models\Administrator;
+use App\Models\Teacher;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -25,6 +31,10 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        // 管理者
+        Gate::define('admin', function(Administrator $administrator){
+            return $administrator->role === 1;
+        });
+
     }
 }
