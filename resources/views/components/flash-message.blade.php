@@ -42,6 +42,14 @@
             "positionClass": "toast-top-right",
         }
         toastr.error("{{ Session::get('delete') }}");
+    // Errormessage用
+    @elseif (Session::has('msg_error'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "positionClass": "toast-top-right",
+        }
+        toastr.error("{{ Session::get('msg_error') }}");
     @endif
 });
 </script>

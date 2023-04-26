@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 // 認証モデルの追加
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 
 class AdminController extends Controller
@@ -248,10 +249,46 @@ class AdminController extends Controller
         // 認証されたユーザーのみを取得する
         $administrator = Administrator::where('id', $userId)->get();
 
-        // dd($administrator);
-
         // admin/profile/index.blade.phpに認証されたIDを渡す。
         return \view('admin.profile.index',\compact('administrator'));
+    }
+
+    /**
+     * プロフィール編集機能（ユーザー名、メールアドレス,Password）
+     * @param Request $request
+     * @return Redirect 管理者ダッシュボード（プロフィール更新完了）
+     */
+    public function AdminProfileUpdate(Request $request,$id)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:20'],
+            // mailアドレス変更しない場合の許可
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('administrators')->ignore(auth()->user()->id)],
+            // Password変更しない場合の許可
+            'password' => ['nullable', 'confirmed', Password::defaults()],
+        ]);
+
+        // idがなければ404画面
+        $administrator = Administrator::findOrFail($id);
+
+        try {
+        	// フォームから取得した値を代入
+            $administrator -> name = $request->name;
+            $administrator -> email = $request->email;
+
+            // password情報が空でないときのみ適応する！
+            if ($request->filled('password')) {
+                $administrator -> password = Hash::make($request->password);
+            }
+
+            $administrator->save();
+        } catch (\Exception $e) {
+            return back()
+            ->with('msg_error', 'プロフィールの更新に失敗しました')->withInput();
+        }
+
+        return redirect()->route('admin.show')
+        ->with('status', 'プロフィールの更新が完了しました');
     }
 
     // 講師一覧ページの表示

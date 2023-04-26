@@ -11,7 +11,7 @@
             @foreach ($administrator as $admin)
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 {{-- 管理者編集用フォーム --}}
-                <form method="POST" action="">
+                <form method="POST" action="{{ route('admin.profile.update',['admin' => $admin->id ]) }}">
                     {{-- 編集→更新する場合はPUTメソッドを使用する。 --}}
                     @method('PUT')
                     @csrf
@@ -35,13 +35,13 @@
                         <div class="mt-4">
                             <x-jet-label for="password" value="{{ __('Password') }}" />
                             <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password"
-                                required autocomplete="new-password" />
+                            autocomplete="new-password" />
                         </div>
 
                         <div class="mt-4">
                             <x-jet-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
                             <x-jet-input id="password_confirmation" class="block mt-1 w-full" type="password"
-                                name="password_confirmation" required autocomplete="new-password" />
+                                name="password_confirmation" autocomplete="new-password" />
                         </div>
                         @endforeach
                         <div class="p-3 w-full flex justify-around mb-3">
