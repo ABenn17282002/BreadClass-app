@@ -188,8 +188,16 @@ class AdminController extends Controller
     */
     public function AdminDeleted($id)
     {
+        // idがなければ404画面
+        $administrator =Administrator::findOrFail($id);
+
+        // 管理者自身の削除の禁止
+        if ($administrator->role === 1) {
+            return back()->with('msg_error', '管理者自身を削除することはできません！');
+        }
+
         //ソフトデリート
-        Administrator::findOrFail($id)->delete();
+        $administrator ->delete();
 
 		// 管理者一覧へ戻る
         return \redirect()->route('admin.show')
