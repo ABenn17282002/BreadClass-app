@@ -80,5 +80,6 @@
     "Save": "保存する",
     "Please confirm access to your account by entering the authentication code provided by your authenticator application.": "認証アプリから提供される認証コードを入力して、アカウントへのアクセスを確認してください。",
     "Photo": "写真はこちら",
-    "API Token Permissions": "API トークンの許可"
+    "API Token Permissions": "API トークンの許可",
+    "Role":"管理者権限"
 }
