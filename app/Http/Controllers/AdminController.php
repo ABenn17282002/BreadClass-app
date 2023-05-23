@@ -47,7 +47,7 @@ class AdminController extends Controller
     */
     public function AdminShow()
     {
-         // administrators_tableのid,名前,email,role,作成日,更新日を取得
+        // administrators_tableのid,名前,email,role,作成日,更新日を取得
         $administrators = Administrator::select('id','name','email','role','created_at','updated_at')->get();
 
         // admin/show/index.blade.phpに$administrators変数を渡す。
@@ -125,7 +125,8 @@ class AdminController extends Controller
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => $input['password'],
-            'role'=> 5,
+            // 登録時を一般に変更
+            'role'=> 9,
         ]);
 
 		// 一覧画面へリダイレクト,FlassMessage
@@ -161,7 +162,13 @@ class AdminController extends Controller
     public function AdminUpdate(Request $request, $id)
     {
         // UpdateValidation
-        $this->validator($request->all())->validate();
+        $request->validate([
+            'name' => ['required', 'string', 'max:20'],
+            // mailアドレス変更しない場合の許可
+            'email' => ['required', 'string', 'email', 'max:255',],
+            // Password変更しない場合の許可
+            'password' => ['nullable', 'confirmed', Password::defaults()],
+        ]);
 
         // idがなければ404画面
         $administrators = Administrator::findOrFail($id);
@@ -170,6 +177,11 @@ class AdminController extends Controller
         $administrators -> email = $request->email;
         // passwordは暗号化
         $administrators -> password = Hash::make($request->password);
+        // 権限の変更
+        $administrators -> role = $request->role;
+
+        // デバック
+        // dd($administrators);
         // 情報を保存
         $administrators ->save();
 
