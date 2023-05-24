@@ -172,6 +172,12 @@ class AdminController extends Controller
 
         // idがなければ404画面
         $administrators = Administrator::findOrFail($id);
+
+        // 自分自身が管理者の場合,変更できない
+    	if ($administrators ->role === 1) {
+        	return back()->with('msg_error', '管理者自身の権限を変更することは出来ません！');
+    	}
+
         // フォームから取得した値を代入
         $administrators -> name = $request->name;
         $administrators -> email = $request->email;
@@ -180,8 +186,6 @@ class AdminController extends Controller
         // 権限の変更
         $administrators -> role = $request->role;
 
-        // デバック
-        // dd($administrators);
         // 情報を保存
         $administrators ->save();
 
