@@ -173,16 +173,23 @@ class AdminController extends Controller
         // idがなければ404画面
         $administrators = Administrator::findOrFail($id);
 
+        // ログインユーザの取得
+        $currentUser = Auth::user();
+
         // 自分自身が管理者の場合,変更できない
-    	if ($administrators ->role === 1) {
+    	if ($administrators ->id === $currentUser  -> id && $currentUser -> role === 1)  {
         	return back()->with('msg_error', '管理者自身の権限を変更することは出来ません！');
     	}
 
         // フォームから取得した値を代入
         $administrators -> name = $request->name;
         $administrators -> email = $request->email;
-        // passwordは暗号化
-        $administrators -> password = Hash::make($request->password);
+
+        // password情報が空でないときのみ適応する！
+        if ($request->filled('password')) {
+            $administrators -> password = Hash::make($request->password);
+        }
+
         // 権限の変更
         $administrators -> role = $request->role;
 
@@ -207,8 +214,11 @@ class AdminController extends Controller
         // idがなければ404画面
         $administrator =Administrator::findOrFail($id);
 
+        // ログインユーザの取得
+        $currentUser = Auth::user();
+
         // 管理者自身の削除の禁止
-        if ($administrator->role === 1) {
+        if ($administrator ->id === $currentUser  -> id && $currentUser -> role === 1) {
             return back()->with('msg_error', '管理者自身を削除することはできません！');
         }
 
