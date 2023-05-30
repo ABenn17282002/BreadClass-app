@@ -15,9 +15,8 @@
                             <x-flash-message />
                             {{-- 新規作成ボタン --}}
                             <div class="flex justify-end mb-4">
-                                <button onclick="location.href='{{ route('admin.show.create')}}'"
-                                    class="text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg">新規登録する</button>
-                                    <a href="{{ route('expired-admins.index')}}"><img class="w-10 h-10 ml-5" src="{{ asset("images/trash.png") }}"></a>
+                                <button onclick="location.href='{{ route('admin.show.create')}}'" class="text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg">新規登録する</button>
+                                <a href="{{ route('expired-admins.index')}}"><img class="w-10 h-10 ml-5" src="{{ asset("images/trash.png") }}"></a>
                             </div>
                             <div class="lg:w-10/12 w-full mx-auto overflow-auto">
                                 <table class="table-auto w-full text-left whitespace-no-wrap">

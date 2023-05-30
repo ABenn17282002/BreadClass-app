@@ -334,4 +334,12 @@ class AdminController extends Controller
         // teacher/show/index.blade.phpに$teachers変数を渡す。
         return \view('admin.teacher.index',compact('teachers'));
     }
+
+    /*
+    * 講師情報新規作成画面の表示
+    */
+    public function TeacherCreateForm()
+    {
+        return view('admin.teacher.create');
+    }
 }
