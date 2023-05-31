@@ -1,7 +1,7 @@
 <x-admin-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            講師新規登録
+            講師情報新規登録
         </h2>
     </x-slot>
     <div class="py-12">
@@ -10,7 +10,7 @@
                 {{-- 新規管理者登録フォーム --}}
                 <div class="max-w-2xl py-4 mx-auto">
                     <x-jet-validation-errors class="mb-4" />
-                    <form method="POST" action="">
+                    <form method="POST" action="{{ route('admin.teacher.post') }}">
                         @csrf
                         <div>
                             <x-jet-label for="name" value="{{ __('Name') }}" />
