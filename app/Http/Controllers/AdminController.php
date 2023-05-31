@@ -26,25 +26,16 @@ class AdminController extends Controller
     private $teacher_show = [AdminController::class, 'TeacherCreateForm'];
     private $teacher_confirm = [AdminController::class, 'TeacherConfirm'];
 
-    // 管理者登録用Validation関数(Protected)
+    // 登録用Validation関数(Protected)
 	protected function validator(array $data)
 	{
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:20'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:administrators'],
+            // メールアドレスルールの統一
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:administrators','unique:teachers'],
             'password' => ['required', 'confirmed', Password::defaults()],
         ]);
 	}
-
-    // 講師情報登録用Validation関数(Protected)
-    protected function teachervalidator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:20'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:teachers'],
-            'password' => ['required', 'confirmed', Password::defaults()],
-        ]);
-    }
 
     /*
     * 管理者DashBoadの表示
@@ -363,7 +354,7 @@ class AdminController extends Controller
     */
     function TeacherPost(Request $request)
     {
-        $this->teachervalidator($request->all())->validate();
+        $this->validator($request->all())->validate();
 
 		// フォームから値を取得する
         $input =["name" => $request['name'],
