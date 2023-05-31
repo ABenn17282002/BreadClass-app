@@ -10,4 +10,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Teacher extends Authenticatable //←変更
 {
     use HasFactory;
+
+    // DBモデルの定義
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+    ];
 }

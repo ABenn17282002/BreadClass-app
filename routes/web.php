@@ -69,6 +69,11 @@ Route::prefix('administrators')->middleware('auth:administrators')->group(functi
 
         // 講師情報新規作成
         Route::get('teacher/create', [AdminController::class, 'TeacherCreateForm'])->name('admin.teacher.create');
+        // 講師情報新規作成確認画面
+        Route::post('teacher/confirm',  [AdminController::class, 'TeacherPost'])->name('admin.teacher.post');
+        Route::get('teacher/confirm',  [AdminController::class, 'TeacherConfirm'])->name('admin.teacher.confirm');
+        // 講師情報新規登録
+        Route::post('teacher/store', [AdminController::class, 'TeacherStore'])->name('admin.teacher.store');
     });
 
 });

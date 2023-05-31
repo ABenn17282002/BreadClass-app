@@ -23,8 +23,10 @@ class AdminController extends Controller
 	// フォーム表示と確認画面のURLの定義(Private)
 	private $form_show = [AdminController::class, 'AdminCreateForm'];
 	private $form_confirm = [AdminController::class, 'AdminConfirm'];
+    private $teacher_show = [AdminController::class, 'TeacherCreateForm'];
+    private $teacher_confirm = [AdminController::class, 'TeacherConfirm'];
 
-    // Validation用関数(Protected)
+    // 管理者登録用Validation関数(Protected)
 	protected function validator(array $data)
 	{
         return Validator::make($data, [
@@ -33,6 +35,16 @@ class AdminController extends Controller
             'password' => ['required', 'confirmed', Password::defaults()],
         ]);
 	}
+
+    // 講師情報登録用Validation関数(Protected)
+    protected function teachervalidator(array $data)
+    {
+        return Validator::make($data, [
+            'name' => ['required', 'string', 'max:20'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:teachers'],
+            'password' => ['required', 'confirmed', Password::defaults()],
+        ]);
+    }
 
     /*
     * 管理者DashBoadの表示
@@ -177,9 +189,9 @@ class AdminController extends Controller
         $currentUser = Auth::user();
 
         // 自分自身が管理者の場合,変更できない
-    	if ($administrators ->id === $currentUser  -> id && $currentUser -> role === 1)  {
-        	return back()->with('msg_error', '管理者自身の権限を変更することは出来ません！');
-    	}
+        if ($administrators ->id === $currentUser  -> id && $currentUser -> role === 1)  {
+            return back()->with('msg_error', '管理者自身の権限を変更することは出来ません！');
+        }
 
         // フォームから取得した値を代入
         $administrators -> name = $request->name;
@@ -291,7 +303,7 @@ class AdminController extends Controller
      * プロフィール編集機能（ユーザー名、メールアドレス,Password）
      * @param Request $request
      * @return Redirect 管理者ダッシュボード（プロフィール更新完了）
-     */
+    */
     public function AdminProfileUpdate(Request $request,$id)
     {
         $request->validate([
@@ -342,4 +354,75 @@ class AdminController extends Controller
     {
         return view('admin.teacher.create');
     }
+
+
+	/**
+    * 講師情報新規作成→確認画面への受け渡し処理
+    * @param \Illuminate\Http\Request $request
+    * @return \Illuminate\Http\Response
+    */
+    function TeacherPost(Request $request)
+    {
+        $this->teachervalidator($request->all())->validate();
+
+		// フォームから値を取得する
+        $input =["name" => $request['name'],
+                "email"=> $request['email'],
+                "password"=>Hash::make($request['password']),
+                ];
+
+        //セッションに書き込む
+        $request->session()->put("form_input", $input);
+
+		// 確認画面にリダイレクトする
+        return redirect()->action($this->teacher_confirm);
+    }
+
+	/**
+    * 講師情報新規作成確認画面出力
+    * @param \Illuminate\Http\Request $request
+    * @return \Illuminate\Http\Response
+    */
+    public function TeacherConfirm(Request $request)
+    {
+        //セッションから値を取り出す
+        $input = $request->session()->get("form_input");
+
+        //セッションに値が無い時はフォームに戻る
+        if (!$input) {
+            return redirect()->action($this->teacher_show);
+        }
+
+        return view('admin.teacher.confirm',["input" => $input]);
+    }
+
+    /**
+     * 講師情報新規登録処理
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+    */
+    public function TeacherStore(Request $request)
+    {
+        //セッションから値を取り出す
+        $input = $request->session()->get("form_input");
+
+        //セッションに値が無い時はフォームに戻る
+        if (!$input) {
+            return redirect()->action($this->form_show);
+        }
+
+        // DB登録処理
+        $teachers =  Teacher::create([
+            'name' => $input['name'],
+            'email' => $input['email'],
+            'password' => $input['password'],
+        ]);
+
+		// 一覧画面へリダイレクト,FlassMessage
+        return \to_route('admin.teacher')->with('status','講師情報の登録が完了しました。');
+
+        // フォームのセッション値は全て削除する
+        $request->session()->forget("form_input");
+    }
+
 }
