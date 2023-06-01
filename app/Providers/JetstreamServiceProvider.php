@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Actions\Jetstream\DeleteUser;
-use Illuminate\Support\ServiceProvider;
 use Laravel\Jetstream\Jetstream;
+use Illuminate\Support\ServiceProvider;
+// ルート用モジュール追加
+use Illuminate\Support\Facades\Route;
 
 class JetstreamServiceProvider extends ServiceProvider
 {
@@ -24,6 +26,7 @@ class JetstreamServiceProvider extends ServiceProvider
         $this->configurePermissions();
 
         Jetstream::deleteUsersUsing(DeleteUser::class);
+
     }
 
     /**

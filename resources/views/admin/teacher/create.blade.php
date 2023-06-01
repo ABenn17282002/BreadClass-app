@@ -10,7 +10,7 @@
                 {{-- 新規管理者登録フォーム --}}
                 <div class="max-w-2xl py-4 mx-auto">
                     <x-jet-validation-errors class="mb-4" />
-                    <form method="POST" action="{{ route('admin.teacher.post') }}">
+                    <form method="POST" action="{{ route('teacher.post') }}">
                         @csrf
                         <div>
                             <x-jet-label for="name" value="{{ __('Name') }}" />
@@ -29,7 +29,7 @@
                             <x-jet-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
                         </div>
                         <div class="p-3 w-full flex justify-around mb-3">
-                            <button type="button" onclick="location.href='{{ route('admin.show')}}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
+                            <button type="button" onclick="location.href='{{ route('teacher.show')}}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
                             <x-jet-button class="ml-4">登録内容を確認する</x-jet-button>
                         </div>
                     </form>
