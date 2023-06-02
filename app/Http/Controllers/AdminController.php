@@ -140,7 +140,6 @@ class AdminController extends Controller
 
     /**
      * 管理者編集画面
-     *
      * @param  int  $id
      * @return \Illuminate\Http\Response
     */
