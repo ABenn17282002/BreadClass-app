@@ -35,7 +35,7 @@ class TeacherController extends Controller
     public function AdminTeacherShow()
     {
         // teachers_tableの名前,email,作成日を取得
-        $teachers = Teacher::select('name','email','created_at')->get();
+        $teachers = Teacher::select('id','name','email','created_at')->get();
 
         // teacher/show/index.blade.phpに$teachers変数を渡す。
         return \view('admin.teacher.index',compact('teachers'));
@@ -52,7 +52,7 @@ class TeacherController extends Controller
     public function TeacherShow()
     {
         // teachers_tableの名前,email,作成日を取得
-        $teachers = Teacher::select('name','email','created_at')->get();
+        $teachers = Teacher::select('id','name','email','created_at')->get();
 
         // teacher/show/index.blade.phpに$teachers変数を渡す。
         return \view('teacher.show.index',compact('teachers'));
@@ -133,5 +133,20 @@ class TeacherController extends Controller
 
         // フォームのセッション値は全て削除する
         $request->session()->forget("form_input");
+    }
+
+    /**
+     * 講師情報編集画面
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+    */
+    public function TeacherEdit($id)
+    {
+        // idがなければ404画面
+        $teachers = Teacher::findOrFail($id);
+        // dd($teachers);
+
+        // admin/teacher/edit.blade.phpにteachers変数(teachers_id)を渡す。
+        return \view('admin.teacher.edit',\compact('teachers'));
     }
 }

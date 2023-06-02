@@ -40,6 +40,8 @@ Route::prefix('administrators')->middleware('auth:administrators')->group(functi
         Route::get('teacher/confirm',  [TeacherController::class, 'TeacherConfirm'])->name('teacher.confirm');
         // 講師情報新規登録
         Route::post('teacher/store', [TeacherController::class, 'TeacherStore'])->name('teacher.store');
+        // 講師情報編集画面
+        Route::get('teacher/edit/{teacher}', [TeacherController::class, 'TeacherEdit'])->name('teacher.edit');
     });
 
 });
