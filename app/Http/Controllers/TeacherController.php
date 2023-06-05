@@ -144,9 +144,48 @@ class TeacherController extends Controller
     {
         // idがなければ404画面
         $teachers = Teacher::findOrFail($id);
-        // dd($teachers);
 
         // admin/teacher/edit.blade.phpにteachers変数(teachers_id)を渡す。
         return \view('admin.teacher.edit',\compact('teachers'));
+    }
+
+    /**
+    * 講師情報更新処理
+    * @param  \Illuminate\Http\Request  $request
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
+    public function TeacherUpdate(Request $request, $id)
+    {
+        // UpdateValidation
+        $request->validate([
+            'name' => ['required', 'string', 'max:20'],
+            // mailアドレス変更しない場合の許可
+            'email' => ['required', 'string', 'email', 'max:255',],
+            // Password変更しない場合の許可
+            'password' => ['nullable', 'confirmed', Password::defaults()],
+        ]);
+
+        // idがなければ404画面
+        $teachers = Teacher::findOrFail($id);
+
+        // フォームから取得した値を代入
+        $teachers-> name = $request->name;
+        $teachers -> email = $request->email;
+
+        // password情報が空でないときのみ適応する！
+        if ($request->filled('password')) {
+            $teachers -> password = Hash::make($request->password);
+        }
+
+        // dd($teachers);
+        // 情報を保存
+        $teachers->save();
+
+        // 一覧ページにredirectして更新
+        return \redirect()
+        ->route('admin.teacher')
+        ->with('status','講師情報を更新しました');
+
     }
 }

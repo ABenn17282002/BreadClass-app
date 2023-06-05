@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 {{-- 管理者編集用フォーム --}}
-                <form method="POST" action="{{ route('admin.show.update',['admin' => $administrators->id ]) }}">
+                <form method="POST" id="update_{{ $administrators ->id }}" action="{{ route('admin.show.update',['admin' => $administrators->id ]) }}">
                     {{-- 編集→更新する場合はPUTメソッドを使用する。 --}}
                     @method('PUT')
                     @csrf
@@ -44,10 +44,19 @@
                         </div>
                         <div class="p-3 w-full flex justify-around mb-3">
                             <button type="button" onclick="location.href='{{ route('admin.show')}}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
-                            <button type="submit" class="text-white bg-lime-500 border-0 py-2 px-8 focus:outline-none hover:bg-lime-400 rounded text-lg">更新する</button>
+                            <a href="#" data-id="{{ $administrators ->id }}" onclick="updatePost(this)" class="text-white bg-lime-500 border-0 py-2 px-8 focus:outline-none hover:bg-lime-400 rounded text-lg">更新する</a>
                         </div>
                 </form>
         </div>
     </div>
     </div>
+    {{-- 更新確認用アラート --}}
+    <script>
+        function updatePost(e) {
+            'use strict';
+            if (confirm('情報を更新しても宜しいですか？')) {
+                document.getElementById('update_' + e.dataset.id).submit();
+            }
+        }
+    </script>
 </x-admin-layout>

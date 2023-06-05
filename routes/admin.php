@@ -9,6 +9,7 @@ use App\Http\Controllers\MultiAuthController;
 // 管理者用ルート
 Route::prefix('administrators')->middleware('auth:administrators')->group(function(){
     Route::middleware('auth:administrators')->group(function () {
+        /** 管理者情報 **/
         // ダッシュボード
         Route::get('dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
         // 一覧の表示
@@ -31,17 +32,20 @@ Route::prefix('administrators')->middleware('auth:administrators')->group(functi
         // プロフィール更新
         Route::put('profile/update/{admin}', [AdminController::class, 'AdminProfileUpdate'])->name('admin.profile.update');
 
-        // 講師一覧の表示
+        /** 講師情報 **/
+        // 一覧の表示
         Route::get('teacher/show', [TeacherController::class, 'AdminTeacherShow'])->name('admin.teacher');
-        // 講師情報新規作成
+        // 新規作成画面
         Route::get('teacher/create', [TeacherController::class, 'TeacherCreateForm'])->name('teacher.create');
-        // 講師情報新規作成確認画面
+        // 新規作成確認画面
         Route::post('teacher/confirm',  [TeacherController::class, 'TeacherPost'])->name('teacher.post');
         Route::get('teacher/confirm',  [TeacherController::class, 'TeacherConfirm'])->name('teacher.confirm');
-        // 講師情報新規登録
+        // 新規登録
         Route::post('teacher/store', [TeacherController::class, 'TeacherStore'])->name('teacher.store');
-        // 講師情報編集画面
+        // 編集画面
         Route::get('teacher/edit/{teacher}', [TeacherController::class, 'TeacherEdit'])->name('teacher.edit');
+        // 情報の更新
+        Route::put('teacher/update/{teacher}',[TeacherController::class, 'TeacherUpdate'])->name('admin.teacher.update');
     });
 
 });
