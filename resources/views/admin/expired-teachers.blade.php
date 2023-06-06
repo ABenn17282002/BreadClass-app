@@ -32,13 +32,13 @@
                                     </thead>
                                     <tbody>
                                         {{-- 配列でデータベースで取得したものを１つずつ取得 --}}
-                                        @foreach ($expiredteachers as $teacher)
+                                        @foreach ($expiredTeachers as $teacher)
                                         <tr>
                                             <td class="px-4 py-3">{{ $teacher->name }}</td>
                                             <td class="px-4 py-3">{{ $teacher->email }}</td>
                                             {{-- 削除済みの日に変更 --}}
                                             <td class="px-4 py-3">{{ $teacher->deleted_at->diffForHumans() }}</td>
-                                            <form method="post" action="">
+                                            <form method="post" action="{{ route('teachers.restore', ['teacher' => $teacher->id ]) }}">
                                                 @csrf
                                                 @method('patch')
                                                 <td class="px-4 py-3">

@@ -189,9 +189,9 @@ class TeacherController extends Controller
     }
 
     /**
-     * 講師情報の論理削除
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+    * 講師情報の論理削除
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
     */
     public function TeacherDeleted($id)
     {
@@ -212,7 +212,21 @@ class TeacherController extends Controller
         // softDeleteのみを取得
         $expiredTeachers = Teacher::onlyTrashed()->get();
 
-        dd($expiredTeachers);
-        //return view('admin.expired-teachers',\compact('expiredTeachers'));
+        // dd($expiredTeachers);
+        return view('admin.expired-teachers',\compact('expiredTeachers'));
+    }
+
+    /**
+    * 講師情報の復元
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
+    public function TeacherRestore($id)
+    {
+    	// 講師情報のゴミ箱IDを取得し、リストア
+        Teacher::onlyTrashed()->findOrFail($id)->restore();
+
+        return redirect()->route('admin.teacher')
+        ->with('success','講師情報を復元しました。');
     }
 }

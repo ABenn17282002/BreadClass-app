@@ -55,17 +55,19 @@ Route::prefix('administrators')->middleware('auth:administrators')->group(functi
 // ゴミ箱(管理者情報)
 Route::prefix('expired-admins')->
     middleware('auth:administrators')->group(function(){
-        // ゴミ箱一覧の表示
+        // ゴミ箱(管理者)一覧の表示
         Route::get('index', [AdminController::class, 'expiredAdminIndex'])->name('expired-admins.index');
-        // 情報の復元
+        // 管理者情報の復元
         Route::patch('restore/{admin}', [AdminController::class, 'AdminRestore'])->name('admins.restore');
-		// 管理者情報物理削除
+		// 管理者情報の物理削除
         Route::post('destroy/{admin}', [AdminController::class, 'expiredAdminDestroy'])->name('admins.destroy');
 });
 
 // ゴミ箱(講師情報)
 Route::prefix('expired-teachers')->
     middleware('auth:administrators')->group(function(){
-        // ゴミ箱一覧の表示
+        // ゴミ箱(講師)一覧の表示
         Route::get('index', [TeacherController::class, 'expiredTeacherIndex'])->name('expired-teachers.index');
+        // 講師情報の復元
+        Route::patch('restore/{teacher}', [TeacherController::class, 'TeacherRestore'])->name('teachers.restore');
 });
