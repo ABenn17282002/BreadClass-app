@@ -11,7 +11,6 @@
                     <section class="text-gray-600 body-font">
                         {{-- flassmessageの表示 --}}
                         <x-flash-message />
-
                         <div class="container px-5 mx-auto">
                             {{-- 一覧へ戻る --}}
                             <div class="flex justify-end mb-4">
@@ -19,6 +18,8 @@
                                     一覧へ戻る
                                 </button>
                             </div>
+                            {{-- ゴミ箱に情報があるかの確認 --}}
+                            @if (count($expiredTeachers) > 0)
                             <div class="lg:w-2/3 w-full mx-auto overflow-auto">
                                 <table class="table-auto w-full text-left whitespace-no-wrap">
                                     <thead>
@@ -46,18 +47,21 @@
                                                 </td>
                                             </form>
                                             {{-- 削除用ボタン --}}
-                                            <form id="" method="post" action="">
+                                            <form id="delete_{{ $teacher-> id }}" method="post" action="{{ route('teachers.destroy', ['teacher' => $teacher->id]) }}">
                                                 @csrf
                                                 <td class="px-4 py-3">
                                                     {{-- data-id=>teachers_id取得 ==>onclickで削除実行 --}}
-                                                    <a href="#" data-id="" onclick="" class="text-white bg-red-400 border-0 py-2 px-4 focus:outline-none hover:bg-red-500 rounded ">削除</a>
+                                                    <a href="#" data-id="{{ $teacher-> id }}" onclick="deletePost(this)" class="text-white bg-red-400 border-0 py-2 px-4 focus:outline-none hover:bg-red-500 rounded">削除</a>
                                                 </td>
                                             </form>
                                         </tr>
                                         @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                @else
+                                    <p class="text-center">ゴミ箱に情報はありません。</p>
+                                @endif
                         </div>
                     </section>
                 </div>
@@ -65,12 +69,12 @@
         </div>
     </div>
     {{-- 削除確認用アラート --}}
-    {{-- <script>
-        function deletePost(e) {
+    <script>
+    function deletePost(e) {
         'use strict';
         if (confirm('データを完全削除しますか?')) {
-        document.getElementById('delete_' + e.dataset.id).submit();
+            document.getElementById('delete_' + e.dataset.id).submit();
         }
-        }
-    </script> --}}
+    }
+    </script>
 </x-admin-layout>

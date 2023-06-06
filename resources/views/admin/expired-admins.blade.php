@@ -12,13 +12,14 @@
                     <section class="text-gray-600 body-font">
                         {{-- flassmessageの表示 --}}
                         <x-flash-message />
-
                         <div class="container px-5 mx-auto">
                             {{-- 一覧へ戻る --}}
                             <div class="flex justify-end mb-4">
                                 <button type="button" onclick="location.href='{{ route('admin.show')}}'"
                                     class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">一覧へ戻る</button>
                             </div>
+                            {{-- ゴミ箱に情報があるかの確認 --}}
+                            @if (count($expiredAdmins) > 0)
                             <div class="lg:w-2/3 w-full mx-auto overflow-auto">
                                 <table class="table-auto w-full text-left whitespace-no-wrap">
                                     <thead>
@@ -65,6 +66,9 @@
                                     </tbody>
                                 </table>
                             </div>
+                            @else
+                                <p class="text-center">ゴミ箱に情報はありません。</p>
+                            @endif
                         </div>
                     </section>
                 </div>
