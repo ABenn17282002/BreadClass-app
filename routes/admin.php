@@ -46,11 +46,13 @@ Route::prefix('administrators')->middleware('auth:administrators')->group(functi
         Route::get('teacher/edit/{teacher}', [TeacherController::class, 'TeacherEdit'])->name('teacher.edit');
         // 情報の更新
         Route::put('teacher/update/{teacher}',[TeacherController::class, 'TeacherUpdate'])->name('admin.teacher.update');
+        // 情報の削除(論理削除)
+        Route::delete('teacher/delelte/{teacher}', [TeacherController::class, 'TeacherDeleted'])->name('teachers.expired');
     });
 
 });
 
-// 管理者情報(ゴミ箱)
+// ゴミ箱(管理者情報)
 Route::prefix('expired-admins')->
     middleware('auth:administrators')->group(function(){
         // ゴミ箱一覧の表示
@@ -59,4 +61,11 @@ Route::prefix('expired-admins')->
         Route::patch('restore/{admin}', [AdminController::class, 'AdminRestore'])->name('admins.restore');
 		// 管理者情報物理削除
         Route::post('destroy/{admin}', [AdminController::class, 'expiredAdminDestroy'])->name('admins.destroy');
+});
+
+// ゴミ箱(講師情報)
+Route::prefix('expired-teachers')->
+    middleware('auth:administrators')->group(function(){
+        // ゴミ箱一覧の表示
+        Route::get('index', [TeacherController::class, 'expiredTeacherIndex'])->name('expired-teachers.index');
 });

@@ -186,6 +186,33 @@ class TeacherController extends Controller
         return \redirect()
         ->route('admin.teacher')
         ->with('status','講師情報を更新しました');
+    }
 
+    /**
+     * 講師情報の論理削除
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+    */
+    public function TeacherDeleted($id)
+    {
+        //ソフトデリート
+        Teacher::findOrFail($id)->delete();
+
+		// 管理者用講師一覧へ戻る
+        return \redirect()
+        ->route('admin.teacher')
+        ->with('trash','講師情報をゴミ箱へ移しました');
+    }
+
+    /*
+    * 管理者ゴミ箱一覧の表示
+    */
+    public function expiredTeacherIndex()
+    {
+        // softDeleteのみを取得
+        $expiredTeachers = Teacher::onlyTrashed()->get();
+
+        dd($expiredTeachers);
+        //return view('admin.expired-teachers',\compact('expiredTeachers'));
     }
 }

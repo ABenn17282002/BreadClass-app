@@ -22,6 +22,8 @@ return new class extends Migration
             $table->rememberToken()->comment('ログイン省略トークン');
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
+            // 論理削除用テーブルを追加
+            $table->softDeletes();
             $table->timestamps();
         });
     }
