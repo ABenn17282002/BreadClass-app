@@ -242,4 +242,20 @@ class TeacherController extends Controller
         return redirect()->route('expired-teachers.index')
         ->with('delete','講師情報を完全に削除しました');;
     }
+
+    /**
+    * 講師用プロフィールの表示
+    */
+    public function TeacherProfile()
+    {
+        // 認証されたユーザーのIDを取得する
+        $userId = Auth::id();
+
+        // 認証されたユーザーが投稿した投稿だけを取得する
+        $teachers = Teacher::where('id', $userId)->get();
+
+        // dd($teachers);
+        // teacher/profile/index.blade.phpに認証されたIDを渡す。
+        return \view('teacher.profile.index',\compact('teachers'));
+    }
 }
