@@ -70,4 +70,6 @@ Route::prefix('expired-teachers')->
         Route::get('index', [TeacherController::class, 'expiredTeacherIndex'])->name('expired-teachers.index');
         // 講師情報の復元
         Route::patch('restore/{teacher}', [TeacherController::class, 'TeacherRestore'])->name('teachers.restore');
+        // 講師情報物理削除
+        Route::post('destroy/{teacher}', [TeacherController::class, 'expiredTeacherDestroy'])->name('teachers.destroy');
 });

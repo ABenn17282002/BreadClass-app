@@ -17,6 +17,8 @@
                                 <button onclick="location.href='{{ route('teacher.create')}}'" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">新規登録する</button>
                                 <a href="{{ route('expired-teachers.index')}}"><img class="w-10 h-10 ml-5" src="{{ asset("images/trash.png") }}"></a>
                             </div>
+                            {{-- 講師情報はあるかの確認 --}}
+                            @if (count($teachers) > 0)
                             <div class="lg:w-2/3 w-full mx-auto overflow-auto">
                                 <table class="table-auto w-full text-left whitespace-no-wrap">
                                     <thead>
@@ -55,6 +57,9 @@
                                     @endforeach
                                 </table>
                             </div>
+                            @else
+                                <p class="text-center">講師情報はありません。<br>講師情報を作成してください。</p>
+                            @endif
                         </div>
                     </section>
                 </div>

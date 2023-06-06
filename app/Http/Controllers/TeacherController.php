@@ -67,7 +67,7 @@ class TeacherController extends Controller
     }
 
     /**
-     * 講師情報新規作成→確認画面への受け渡し処理
+    * 講師情報新規作成→確認画面への受け渡し処理
     * @param \Illuminate\Http\Request $request
     * @return \Illuminate\Http\Response
     */
@@ -89,7 +89,7 @@ class TeacherController extends Controller
     }
 
     /**
-     * 講師情報新規作成確認画面出力
+    * 講師情報新規作成確認画面出力
     * @param \Illuminate\Http\Request $request
     * @return \Illuminate\Http\Response
     */
@@ -136,9 +136,9 @@ class TeacherController extends Controller
     }
 
     /**
-     * 講師情報編集画面
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+    * 講師情報編集画面
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
     */
     public function TeacherEdit($id)
     {
@@ -212,7 +212,6 @@ class TeacherController extends Controller
         // softDeleteのみを取得
         $expiredTeachers = Teacher::onlyTrashed()->get();
 
-        // dd($expiredTeachers);
         return view('admin.expired-teachers',\compact('expiredTeachers'));
     }
 
@@ -228,5 +227,19 @@ class TeacherController extends Controller
 
         return redirect()->route('admin.teacher')
         ->with('success','講師情報を復元しました。');
+    }
+
+    /**
+    * 講師情報の完全削除
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
+    public function expiredTeacherDestroy($id)
+    {
+        // 論理削除したuserを物理削除する
+        Teacher::onlyTrashed()->findOrFail($id)->forceDelete();
+
+        return redirect()->route('expired-teachers.index')
+        ->with('delete','講師情報を完全に削除しました');;
     }
 }
