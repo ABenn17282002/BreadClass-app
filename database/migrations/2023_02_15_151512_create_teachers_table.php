@@ -20,7 +20,6 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable()->comment('メール認証日時');
             $table->string('password')->comment('パスワード');
             $table->rememberToken()->comment('ログイン省略トークン');
-            $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
             // 論理削除用テーブルを追加
             $table->softDeletes();

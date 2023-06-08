@@ -13,5 +13,7 @@ Route::prefix('teachers')->middleware('auth:teachers')->group(function(){
         Route::get('show', [TeacherController::class, 'TeacherShow'])->name('teacher.show');
         // プロフィール画面
         Route::get('profile', [TeacherController::class, 'TeacherProfile'])->name('teacher.profile');
+        // プロフィール更新
+        Route::put('profile/update/{teacher}', [TeacherController::class, 'TeacherProfileUpdate'])->name('teacher.profile.update');
     });
 });

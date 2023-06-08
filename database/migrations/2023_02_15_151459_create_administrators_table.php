@@ -22,7 +22,6 @@ return new class extends Migration
             $table->rememberToken()->comment('ログイン省略トークン');
             // role設定
             $table->tinyInteger('role');
-            $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
             // 論理削除用テーブルを追加

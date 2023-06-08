@@ -310,7 +310,7 @@ class AdminController extends Controller
             $administrator -> name = $request->name;
             $administrator -> email = $request->email;
 
-            // password情報が空でないときのみ適応する！
+            // password情報が空でないときのみ適用する！
             if ($request->filled('password')) {
                 $administrator -> password = Hash::make($request->password);
             }

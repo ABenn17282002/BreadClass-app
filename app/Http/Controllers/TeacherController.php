@@ -254,8 +254,45 @@ class TeacherController extends Controller
         // 認証されたユーザーが投稿した投稿だけを取得する
         $teachers = Teacher::where('id', $userId)->get();
 
-        // dd($teachers);
         // teacher/profile/index.blade.phpに認証されたIDを渡す。
         return \view('teacher.profile.index',\compact('teachers'));
     }
+
+    /**
+    * 講師プロフィール編集機能（ユーザー名、メールアドレス,Password）
+    * @param Request $request
+    * @return Redirect 講師用ダッシュボード（プロフィール更新完了）
+    */
+    public function TeacherProfileUpdate(Request $request,$id)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:20'],
+            // mailアドレス変更しない場合の許可
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('administrators')->ignore(auth()->user()->id)],
+            // Password変更しない場合の許可
+            'password' => ['nullable', 'confirmed', Password::defaults()],
+        ]);
+
+        // idがなければ404画面
+        $teachers = Teacher::findOrFail($id);
+
+        try {
+        	// フォームから取得した値を代入
+            $teachers  -> name = $request->name;
+            $teachers  -> email = $request->email;
+
+            // password情報が空でないときのみ適用する！
+            if ($request->filled('password')) {
+                $teachers -> password = Hash::make($request->password);
+            }
+            $teachers ->save();
+        } catch (\Exception $e) {
+            return back()
+            ->with('msg_error', 'プロフィールの更新に失敗しました')->withInput();
+        }
+
+        return redirect()->route('teacher.show')
+        ->with('status', 'プロフィールの更新が完了しました');
+    }
+
 }
