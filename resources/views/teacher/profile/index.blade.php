@@ -9,8 +9,8 @@
             {{-- 配列でデータベースで取得したものを１つずつ取得 --}}
             @foreach ($teachers as $teacher)
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                {{-- 管理者編集用フォーム --}}
-                <form method="POST" action="">
+                {{-- 講師プロフィール編集用フォーム --}}
+                <form method="POST" action="{{ route('teacher.profile.update',['teacher' => $teacher->id ]) }}">
                     {{-- 編集→更新する場合はPUTメソッドを使用する。 --}}
                     @method('PUT')
                     @csrf
