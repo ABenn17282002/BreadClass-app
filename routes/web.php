@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\MultiAuthController;
+
 // 管理者用のルートをインクルード
 require __DIR__.'/admin.php';
 // 講師用のルートをインクルード
