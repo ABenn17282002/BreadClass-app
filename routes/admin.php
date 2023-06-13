@@ -4,7 +4,12 @@ use Illuminate\Support\Facades\Route;
 // 管理者・講師用コントローラーの使用
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TeacherController;
-use App\Http\Controllers\MultiAuthController;
+// ImageControllerの使用
+use App\Http\Controllers\ImageController;
+
+// ImageControllerのルート情報
+Route::resource('administrators/images',ImageController::class)
+->middleware('auth:administrators')->except('[show]');
 
 // 管理者用ルート
 Route::prefix('administrators')->middleware('auth:administrators')->group(function(){
