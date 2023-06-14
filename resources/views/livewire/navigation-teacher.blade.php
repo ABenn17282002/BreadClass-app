@@ -17,6 +17,9 @@
                     <x-jet-nav-link href="{{ route('teacher.show') }}" :active="request()->routeIs('teacher.show')">
                         講師一覧
                     </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('teacher.image.list') }}" :active="request()->routeIs('teachers.image.list')">
+                        画像一覧
+                    </x-jet-nav-link>
                 </div>
             </div>
             <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -77,6 +80,9 @@
             </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('teacher.show') }}" :active="request()->routeIs('teacher.show')">
                 講師一覧
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('teacher.image.list') }}" :active="request()->routeIs('teacher.image.list')">
+                画像一覧
             </x-jet-responsive-nav-link>
         </div>
 
