@@ -3,21 +3,43 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+// Administrator, Teacher,Imageモデルの使用
+use App\Models\Administrator;
+use App\Models\Teacher;
+use App\Models\Image;
+// 認証モデルの追加
+use Illuminate\Support\Facades\Auth;
 
 class ImageController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    * 画像一覧ページ(管理者用)
+    */
+    public function AdminImages()
     {
         return view('admin.images.index');
     }
 
     /**
+    * 画像一覧ページ(講師用)
+    */
+    public function TeacherImages()
+    {
+        return view('teacher.images.index');
+    }
+
+    /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function AdminImagesCreate()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function TeacherImagesCreate()
     {
         //
     }
@@ -25,15 +47,15 @@ class ImageController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function AdminImagesStore(Request $request)
     {
         //
     }
 
     /**
-     * Display the specified resource.
+     * Store a newly created resource in storage.
      */
-    public function show(string $id)
+    public function TeacherImagesStore(Request $request)
     {
         //
     }
@@ -41,7 +63,15 @@ class ImageController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function AdminImagesEdit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function TeacherImagesEdit(string $id)
     {
         //
     }
@@ -49,7 +79,15 @@ class ImageController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function AdminImagesUpdate(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function TeacherImagesUpdate(Request $request, string $id)
     {
         //
     }
@@ -57,7 +95,15 @@ class ImageController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function AdminImagesDestroy(string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function TeacherImagesdestroy(string $id)
     {
         //
     }

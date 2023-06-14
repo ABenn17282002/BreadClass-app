@@ -8,8 +8,17 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\ImageController;
 
 // ImageControllerのルート情報
-Route::resource('administrators/images',ImageController::class)
-->middleware('auth:administrators')->except('[show]');
+Route::controller(ImageController::class)->prefix('administrators/images')->group(function() {
+    Route::middleware('auth:administrators')->group(function () {
+    Route::get('/', 'AdminImages')->name('admin.image.list');
+    Route::get('/create', 'AdminImagesCreate')->name('admin.image.create');
+    Route::post('/', 'AdminImagesStore')->name('admin.image.store');
+    Route::get('edit/{image}', 'AdminImagesEdit')->name('admin.image.edit');
+    Route::put('update/{image}','AdminImagesUpdate')->name('admin.image.update');
+    Route::post('destroy/{image}', 'AdminImagesDestroy')->name('admin.image.destroy');
+    });
+});
+
 
 // 管理者用ルート
 Route::prefix('administrators')->middleware('auth:administrators')->group(function(){
@@ -54,7 +63,6 @@ Route::prefix('administrators')->middleware('auth:administrators')->group(functi
         // 情報の削除(論理削除)
         Route::delete('teacher/delelte/{teacher}', [TeacherController::class, 'TeacherDeleted'])->name('teachers.expired');
     });
-
 });
 
 // ゴミ箱(管理者情報)

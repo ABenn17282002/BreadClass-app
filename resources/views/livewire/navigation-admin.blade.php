@@ -21,7 +21,7 @@
                     <x-jet-nav-link href="{{ route('admin.teacher') }}" :active="request()->routeIs('admin.teacher')">
                         講師一覧
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ route('images.index') }}" :active="request()->routeIs('images.index')">
+                    <x-jet-nav-link href="{{ route('admin.image.list') }}" :active="request()->routeIs('admin.image.list')">
                         画像一覧
                     </x-jet-nav-link>
                 </div>
@@ -93,7 +93,7 @@
             <x-jet-responsive-nav-link href="{{ route('admin.teacher') }}" :active="request()->routeIs('admin.teacher')">
                 講師一覧
             </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('images.index') }}" :active="request()->routeIs('images.index')">
+            <x-jet-responsive-nav-link href="{{ route('admin.image.list') }}" :active="request()->routeIs('admin.image.list')">
                 画像一覧
             </x-jet-responsive-nav-link>
         </div>
