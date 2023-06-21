@@ -7,8 +7,11 @@ use Illuminate\Database\Seeder;
 // 各モデルの追加
 use App\Models\Administrator;
 use App\Models\Teacher;
+use App\Models\Image;
 // DB::Hashクラスの追加(暗号化)
 use Illuminate\Support\Facades\Hash;
+// DB用Facadeをインポート
+use Illuminate\Support\Facades\DB;
 
 class MultiAuthTableSeeder extends Seeder
 {
@@ -65,5 +68,41 @@ class MultiAuthTableSeeder extends Seeder
             $teacher->password = Hash::make($init_teacher['password']);
             $teacher->save();
         }
+
+        // 画像
+        $init_images = [
+            [
+                'administrators_id' => 1,
+                'filename' => 'sample1.jpg'
+            ],
+            [
+                'administrators_id' => 1,
+                'filename' => 'sample2.jpg'
+            ],
+            [
+                'administrators_id' => 1,
+                'filename' => 'sample3.jpg'
+            ],
+                        [
+                'administrators_id' => 1,
+                'filename' => 'sample4.jpg'
+            ],
+            [
+                'administrators_id' => 1,
+                'filename' => 'sample5.jpg'
+            ],
+            [
+                'administrators_id' => 1,
+                'filename' => 'sample6.jpg'
+            ],
+        ];
+
+        foreach($init_images as $init_image) {
+            $image= new Image();
+            $image->administrators_id = $init_image['administrators_id'];
+            $image->filename = $init_image['filename'];
+            $image->save();
+        }
+
     }
 }

@@ -3,21 +3,57 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-// Administrator, Teacher,Imageモデルの使用
+// Administrator,Teacher,Imageモデルの使用
 use App\Models\Administrator;
 use App\Models\Teacher;
 use App\Models\Image;
 // 認証モデルの追加
 use Illuminate\Support\Facades\Auth;
+// Storage用モジュールの使用
+use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
 {
+
+    /*ログイン済みImageのみ表示させるため
+    コンストラクタの設定 */
+    public function __construct()
+    {
+        $this->middleware('auth:administrators');
+
+        // コントローラミドルウェア
+        $this->middleware(function ($request, $next) {
+
+        // image_idの取得
+        $id = $request->route()->parameter('image');
+        // null判定
+        if(!is_null($id)){
+            // images_administratorsIdの取得
+            $imagesAdminId= Image::findOrFail($id)->administrators->id;
+            // 文字列→数値に変換
+            $imageId = (int)$imagesAdminId;
+            // imageIdが認証済でない場合
+            if($imageId  !== Auth::id()){
+                abort(404); // 404画面表示
+            }
+        }
+            return $next($request);
+        });
+    }
+
     /**
     * 画像一覧ページ(管理者用)
     */
     public function AdminImages()
     {
-        return view('admin.images.index');
+    	// 認証済administrators_idに紐づくImageIDを取得
+        $images = Image::where('administrators_id', Auth::id())
+        // 降順取得20件まで
+        ->orderBy('updated_at', 'desc')
+        ->paginate(20);
+
+    	// admin/images/index.balde.phpにimages変数付で返す
+        return view('admin.images.index',compact('images'));
     }
 
     /**

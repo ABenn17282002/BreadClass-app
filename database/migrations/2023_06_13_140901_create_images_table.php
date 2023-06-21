@@ -13,6 +13,20 @@ return new class extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
+            // 画像名
+            $table->string('filename');
+            // title:null可
+            $table->string('title')->nullable();
+            // altkey:null可
+            $table->string('alt')->nullable();
+            // 外部キー制約(管理者idに紐づくもの)
+            $table->foreignId('administrators_id')
+            ->references('id')
+            ->on('administrators')
+            ->constrained()
+            // Delete時の対応で外部制約のため必要
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
             $table->timestamps();
         });
     }
