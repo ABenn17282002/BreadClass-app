@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 // 論理削除モデルの使用
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Image;
 
 class Administrator extends Authenticatable //←変更
 {
@@ -22,4 +23,12 @@ class Administrator extends Authenticatable //←変更
         'role',
     ];
 
+    /**
+    * 管理者関連しているimage情報を取得
+    * 1 対 多モデル
+    */
+    public function image()
+    {
+        return $this->hasMany(Image::class);
+    }
 }
