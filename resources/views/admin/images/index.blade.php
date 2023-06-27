@@ -12,6 +12,8 @@
                     <div class="flex justify-end mb-4">
                         <button onclick="" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">新規登録する</button>
                     </div>
+                    {{-- 画像があるか確認 --}}
+                    @if (count($images) > 0)
                     {{-- 画像をflexで横並びにする --}}
                     <div class="flex flex-wrap">
                         {{-- foreach構文でimages_tableからデータを取得 --}}
@@ -35,6 +37,11 @@
                     {{-- ページネーション --}}
                     {{ $images->links() }}
                 </div>
+                @else
+                <div>
+                    <img src="{{ asset('images/no_image.jpg')}}">
+                </div>
+                @endif
             </div>
         </div>
     </div>

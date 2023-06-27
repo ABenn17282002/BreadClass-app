@@ -83,23 +83,29 @@ class MultiAuthTableSeeder extends Seeder
                 'administrators_id' => 1,
                 'filename' => 'sample3.jpg'
             ],
-                        [
-                'administrators_id' => 1,
+            [
+                'teachers_id' => 1,
                 'filename' => 'sample4.jpg'
             ],
             [
-                'administrators_id' => 1,
+                'teachers_id' => 1,
                 'filename' => 'sample5.jpg'
             ],
             [
-                'administrators_id' => 1,
+                'teachers_id' => 1,
                 'filename' => 'sample6.jpg'
             ],
         ];
 
         foreach($init_images as $init_image) {
             $image= new Image();
-            $image->administrators_id = $init_image['administrators_id'];
+            // 空でない場合のみ登録する
+            if (isset($init_image['teachers_id'])) {
+                $image->teachers_id = $init_image['teachers_id'];
+            }
+            if (isset($init_image['administrators_id'])) {
+                $image->administrators_id = $init_image['administrators_id'];
+            }
             $image->filename = $init_image['filename'];
             $image->save();
         }
