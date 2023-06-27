@@ -19,14 +19,19 @@ return new class extends Migration
             $table->string('title')->nullable();
             // altkey:null可
             $table->string('alt')->nullable();
+            // 管理者ID:null可
+            $table->unsignedBigInteger('administrators_id')->nullable();
             // 外部キー制約(管理者idに紐づくもの)
-            $table->foreignId('administrators_id')
-            ->references('id')
+            $table->foreign('administrators_id')
+            ->nullable()->references('id')
             ->on('administrators')
-            ->constrained()
-            // Delete時の対応で外部制約のため必要
-            ->onUpdate('cascade')
-            ->onDelete('cascade');
+            // 削除、更新時対応
+            ->onDelete('set null')->onUpdate('cascade');
+            // 講師ID:null可
+            $table->unsignedBigInteger('teachers_id')->nullable();
+            $table->foreign('teachers_id')->nullable()
+            ->references('id')->on('teachers')
+            ->onDelete('set null')->onUpdate('cascade');
             $table->timestamps();
         });
     }

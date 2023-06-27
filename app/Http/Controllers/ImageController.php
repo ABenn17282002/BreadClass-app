@@ -15,11 +15,13 @@ use Illuminate\Support\Facades\Storage;
 class ImageController extends Controller
 {
 
+
     /*ログイン済みImageのみ表示させるため
     コンストラクタの設定 */
     public function __construct()
     {
-        $this->middleware('auth:administrators');
+
+        $this->middleware('auth:administrators,teachers');
 
         // コントローラミドルウェア
         $this->middleware(function ($request, $next) {
@@ -30,10 +32,12 @@ class ImageController extends Controller
         if(!is_null($id)){
             // images_administratorsIdの取得
             $imagesAdminId= Image::findOrFail($id)->administrators->id;
+            $imagesTeacherId= Image::findOrFail($id)->teachers->id;
             // 文字列→数値に変換
-            $imageId = (int)$imagesAdminId;
+            $imageAdminId = (int)$imagesAdminId;
+            $imageTeacherId = (int)$imagesTeacherId;
             // imageIdが認証済でない場合
-            if($imageId  !== Auth::id()){
+            if($imageAdminId  !== Auth::id() || $imageTeacherId  !== Auth::id()){
                 abort(404); // 404画面表示
             }
         }
@@ -61,7 +65,13 @@ class ImageController extends Controller
     */
     public function TeacherImages()
     {
-        return view('teacher.images.index');
+    	// 認証済teachers_idに紐づくImageIDを取得
+        $images = Image::where('teachers_id', Auth::id())
+        // 降順取得20件まで
+        ->orderBy('updated_at', 'desc')
+        ->paginate(20);
+
+        return view('teacher.images.index',compact('images'));
     }
 
     /**
