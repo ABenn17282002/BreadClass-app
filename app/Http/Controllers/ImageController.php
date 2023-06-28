@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Storage;
 class ImageController extends Controller
 {
 
-
     /*ログイン済みImageのみ表示させるため
     コンストラクタの設定 */
     public function __construct()
@@ -75,19 +74,19 @@ class ImageController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * 管理者用画像新規登録画面の表示
      */
     public function AdminImagesCreate()
     {
-        //
+        return \view('admin.images.create');
     }
 
     /**
-     * Show the form for creating a new resource.
+     * 講師用画像新規登録画面の表示
      */
     public function TeacherImagesCreate()
     {
-        //
+        return \view('teacher.images.create');
     }
 
     /**

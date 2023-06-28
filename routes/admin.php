@@ -12,7 +12,7 @@ Route::controller(ImageController::class)->prefix('administrators/images')->grou
     Route::middleware('auth:administrators')->group(function () {
     Route::get('/', 'AdminImages')->name('admin.image.list');
     Route::get('/create', 'AdminImagesCreate')->name('admin.image.create');
-    Route::post('/', 'AdminImagesStore')->name('admin.image.store');
+    Route::post('/store', 'AdminImagesStore')->name('admin.image.store');
     Route::get('edit/{image}', 'AdminImagesEdit')->name('admin.image.edit');
     Route::put('update/{image}','AdminImagesUpdate')->name('admin.image.update');
     Route::post('destroy/{image}', 'AdminImagesDestroy')->name('admin.image.destroy');
