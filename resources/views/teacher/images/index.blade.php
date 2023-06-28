@@ -10,7 +10,7 @@
                 <x-flash-message/>
                 {{-- 画像新規作成 --}}
                 <div class="flex justify-end mb-4">
-                    <button onclick="" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">新規登録する</button>
+                    <button onclick="location.href='{{ route('teacher.image.create')}}'" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">新規登録する</button>
                 </div>
                 {{-- 画像があるか確認 --}}
                 @if (count($images) > 0)
@@ -38,7 +38,8 @@
                 {{ $images->links() }}
             </div>
             @else
-            <div>
+            <div class="w-1/4 p-2 m-auto">
+                <p class="text-center">画像がありません。登録をしてください</p>
                 <img src="{{ asset('images/no_image.jpg')}}">
             </div>
             @endif

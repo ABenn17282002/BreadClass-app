@@ -11,7 +11,7 @@ Route::controller(ImageController::class)->prefix('teachers/images')->group(func
     Route::middleware('auth:teachers')->group(function () {
     Route::get('/', 'TeacherImages')->name('teacher.image.list');
     Route::get('/create', 'TeacherImagesCreate')->name('teacher.image.create');
-    Route::post('/', 'TeacherImagesStore')->name('teacher.image.store');
+    Route::post('/store', 'TeacherImagesStore')->name('teacher.image.store');
     Route::get('edit/{image}', 'TeacherImagesEdit')->name('teacher.image.edit');
     Route::put('update/{image}','TeacherImagesUpdate')->name('teacher.image.update');
     Route::post('destroy/{image}','TeacherImagesDestroy')->name('teacher.image.destroy');
