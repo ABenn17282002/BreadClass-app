@@ -12,7 +12,7 @@
                     {{-- Error_message --}}
                     <x-jet-validation-errors class="mb-4" />
                     {{-- 新規画像UPLoad --}}
-                    <form method="post" action="" enctype="multipart/form-data">
+                    <form method="post" action="{{ route('admin.image.store',)}}" enctype="multipart/form-data">
                             @csrf
                             <div class="-m-2">
                                 <div class="p-2 w-1/2 mx-auto">

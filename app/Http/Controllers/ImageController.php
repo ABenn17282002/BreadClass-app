@@ -11,6 +11,8 @@ use App\Models\Image;
 use Illuminate\Support\Facades\Auth;
 // Storage用モジュールの使用
 use Illuminate\Support\Facades\Storage;
+//  画像リサイズ用モデル
+use InterventionImage;
 
 class ImageController extends Controller
 {
@@ -49,6 +51,8 @@ class ImageController extends Controller
     */
     public function AdminImages()
     {
+        // \phpinfo();
+
     	// 認証済administrators_idに紐づくImageIDを取得
         $images = Image::where('administrators_id', Auth::id())
         // 降順取得20件まで
@@ -90,11 +94,56 @@ class ImageController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * 管理者新規画像アップロード
      */
     public function AdminImagesStore(Request $request)
     {
-        //
+        $foldername = "common";
+        // 乱数値でファイル名作成
+        $fileName = uniqid(rand().'_');
+
+        // 複数ファイルを取得
+        $imageFiles = $request->file('files');
+        // alt,titleの取得
+        $alts = $request->input('alts');
+        $titles = $request->input('titles');
+
+        if (!is_null($imageFiles)) {
+            foreach ($imageFiles as $index => $imageFile) {
+                // 画像ファイルが配列形式か確認
+                if (is_array($imageFile)) {
+                    $file = $imageFile['image'];
+                } else {
+                    $file = $imageFile;
+                }
+
+                $extension = $file->extension();
+                // 拡張したfile名+乱数値で再度ファイル名を生成
+                $fileNameToStore = $fileName . '_' . $index . '.' . $extension;
+                // 画像サイズ1920 * 1080サイズに変更する
+                $resizedImage = InterventionImage::make($file)->resize(1920, 1080)->encode();
+
+                // publicフォルダ配下にcommonフォルダを作り、画像を保存
+                $file->storeAS('public/' . $foldername, $fileNameToStore);
+
+                // altとtitleを取得
+                $alt = isset($alts[$index]) ? $alts[$index] : null;
+                $title = isset($titles[$index]) ? $titles[$index] : null;
+
+                // image_tableのadministrators_idと画像情報を記録
+                $image = new Image();
+                $image->administrators_id = Auth::id();
+                $image->filename = $fileNameToStore;
+                $image->alt = $alt;
+                $image->title = $title;
+                $image->save();
+            }
+        }
+
+        // redirect admin/images/index.blade.php + flashmessage
+        return redirect()
+        ->route('admin.image.list')
+        ->with('status','画像登録を実施しました。');
     }
 
     /**
