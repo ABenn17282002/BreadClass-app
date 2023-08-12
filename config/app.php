@@ -85,7 +85,7 @@ return [
 
     // locale(位置)を日本に変更
     'locale' => 'ja',
-    
+
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
@@ -187,6 +187,8 @@ return [
         /*
          * Package Service Providers...
          */
+        // image_resize用
+        Intervention\Image\ImageServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -214,6 +216,9 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+
+        // InterventionImageエイリアス
+        'InterventionImage' =>Intervention\Image\Facades\Image::class
     ])->toArray(),
 
 ];

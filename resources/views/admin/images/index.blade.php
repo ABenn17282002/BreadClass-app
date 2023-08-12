@@ -24,10 +24,10 @@
                                 <a href="">
                                         <div class="border rounded-md p-2 md:p-4">
                                             {{-- 画像title取得 --}}
-                                            <div class="text-gray-700">{{ $image->title }}</div>
+                                            <div class="text-gray-700">{{ $image -> title }}</div>
                                             {{-- 画像取得 --}}
                                             <div>
-                                                <img src="{{ asset('storage/common/' . $image -> filename)}}">
+                                                <img src="{{ asset('storage/common/' . $image -> filename)}}" alt="{{ $image -> alt }}">
                                             </div>
                                         </div>
                                 </a>
