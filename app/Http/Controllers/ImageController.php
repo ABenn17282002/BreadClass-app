@@ -98,10 +98,6 @@ class ImageController extends Controller
      */
     public function AdminImagesStore(Request $request)
     {
-        $foldername = "common";
-        // 乱数値でファイル名作成
-        $fileName = uniqid(rand().'_');
-
         // 複数ファイルを取得
         $imageFiles = $request->file('files');
         // alt,titleの取得
@@ -109,34 +105,35 @@ class ImageController extends Controller
         $titles = $request->input('titles');
 
         if (!is_null($imageFiles)) {
-            foreach ($imageFiles as $index => $imageFile) {
+
+            // 画像ファイルを1つずつ取得
+            foreach ($imageFiles  as $index => $imageFile) {
                 // 画像ファイルが配列形式か確認
-                if (is_array($imageFile)) {
+                if(is_array($imageFile))
+                {
                     $file = $imageFile['image'];
                 } else {
                     $file = $imageFile;
                 }
-
+                // ファイル名をランダム
+                $fileName = uniqid(rand() . '_');
+                $foldername = "common";
                 $extension = $file->extension();
-                // 拡張したfile名+乱数値で再度ファイル名を生成
                 $fileNameToStore = $fileName . '_' . $index . '.' . $extension;
-                // 画像サイズ1920 * 1080サイズに変更する
+                // 画像サイズを1920 * 1080サイズへ変更
                 $resizedImage = InterventionImage::make($file)->resize(1920, 1080)->encode();
+                // 画像を保存
+                Storage::put('public/' . $foldername . '/' . $fileNameToStore, $resizedImage);
 
-                // publicフォルダ配下にcommonフォルダを作り、画像を保存
-                $file->storeAS('public/' . $foldername, $fileNameToStore);
-
-                // altとtitleを取得
                 $alt = isset($alts[$index]) ? $alts[$index] : null;
                 $title = isset($titles[$index]) ? $titles[$index] : null;
 
-                // image_tableのadministrators_idと画像情報を記録
-                $image = new Image();
-                $image->administrators_id = Auth::id();
-                $image->filename = $fileNameToStore;
-                $image->alt = $alt;
-                $image->title = $title;
-                $image->save();
+                Image::create([
+                    'administrators_id' => Auth::id(),
+                    'filename' => $fileNameToStore,
+                    'alt' => $alt,
+                    'title' => $title
+                ]);
             }
         }
 
